@@ -1,5 +1,6 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
+const paths = require('./config/paths');
 
 module.exports = merge(common, {
     mode: 'development',
@@ -7,5 +8,10 @@ module.exports = merge(common, {
         host: 'localhost',
         port: 3000,
         open: true
+    },
+    resolve: {
+        alias: {
+            '@': paths.appSrc
+        },
     }
 })
