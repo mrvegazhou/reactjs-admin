@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Layout } from 'antd'
 import { changeIsMobile, changeCollapsed } from '@/redux/actions/layout'
+import user from "@/redux/reducers/userReducer";
 
 class LayoutComponent extends Component {
     componentWillMount () {
@@ -22,9 +23,9 @@ class LayoutComponent extends Component {
         isMobile && (marginLeft=0);
         return (
             <Layout>
-                <Sider />
+
                 <Layout style={{ marginLeft,transition:'margin .2s'}}>
-                            sss
+
                 </Layout>
             </Layout>
         )
@@ -33,8 +34,8 @@ class LayoutComponent extends Component {
 
 const mapStateToProps = state => (
     {
-        collapsed: state.UI.collapsed,
-        isMobile: state.UI.isMobile
+        collapsed: state.user.collapsed,
+        isMobile: state.user.isMobile
     }
 )
 
@@ -48,4 +49,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayoutComponent)
-

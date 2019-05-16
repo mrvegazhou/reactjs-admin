@@ -1,12 +1,13 @@
 import React from "react";
-import {browserHistory, Router, Route, IndexRoute} from "react-router";
-import Layout from "../views/layout";
+import { browserHistory, HashRouter as Router, Route, Switch} from 'react-router-dom'
+import LayoutComponent from "@/views/layout";
 
 const RouteConfig = (
     <Router history={browserHistory}>
         <Switch>
-            <Route path="/read" getComponent={read} />
-            <Route path="/" component={Layout} />
+            <Route path="/" component={LayoutComponent} />
         </Switch>
     </Router>
 );
+
+export default RouteConfig;
