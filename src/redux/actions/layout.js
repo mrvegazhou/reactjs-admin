@@ -1,3 +1,4 @@
+import * as type from '@/modules/constants/actionTypes'
 
 // 改变左侧菜单栏宽度（是否显示）
 const changeIsMobile = playload => ({
