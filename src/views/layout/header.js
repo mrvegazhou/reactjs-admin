@@ -9,7 +9,7 @@ const LayoutHeader = props => {
     const {collapsed, changeCollapsed, isMobile, deleteToken} = props
     const historyUserInfo = JSON.parse(localStorage.getItem('userInfo'))
     let userInfo = props.userInfo ? props.userInfo : historyUserInfo
-    const handleLogout =() => deleteToken()
+    const handleLogout = () => deleteToken()
     const DropdownList = (
         <Menu>
             <Menu.Item key='user'>

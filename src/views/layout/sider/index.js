@@ -8,7 +8,8 @@ class SiderComponent extends Component {
     render () {
         const { collapsed, isMobile } = this.props;
         return (
-            <Sider collapsed={isMobile?false:collapsed} collapsible
+            <Sider collapsed={isMobile?false:collapsed}
+                   collapsible
                    style={{ overflowY: 'auto', overflowX: 'hidden', height: '100vh', position: 'fixed', left: 0 ,backgroundColor:'#fff'}}
                    trigger={null}
                    width={isMobile ? 0 :250}

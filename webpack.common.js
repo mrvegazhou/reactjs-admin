@@ -1,18 +1,21 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const path = require('path');
 const ROOT_PATH = path.resolve(__dirname);
 const APP_PATH = path.resolve(ROOT_PATH, 'src'); //__dirname 中的src目录，以此类推
 
 module.exports = {
-    entry: {
-        main: './src/index.js'
-    },
-    devtool: 'source-map',
+    entry: [
+        'react-hot-loader/patch',
+        './src/index.js'
+    ],
+    devtool: 'inline-source-map',
     output: {
         filename: '[name].[hash].js',
         path: path.resolve(__dirname, './dist'),
+        publicPath: "/"
     },
     module: {
         rules: [
@@ -75,6 +78,7 @@ module.exports = {
     //     require('autoprefixer')    //调用autoprefixer插件,css3自动补全
     // ],
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebPackPlugin({
             filename:'index.html',
             template: path.resolve('index.html'),

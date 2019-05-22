@@ -14,3 +14,7 @@ const render = Component => {   // 增加react-hot-loader保持状态刷新操�
     )
 }
 render(App)
+
+if (module.hot) {
+    module.hot.accept('./App', () => { render(App) })
+}

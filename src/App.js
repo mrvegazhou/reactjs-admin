@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import {Provider} from 'react-redux'
+import { hot } from "react-hot-loader";
 import router from "./router";
-import store from "./redux/store";
+import { store, history } from "./redux/stores/store";
 
 class App extends Component {
     componentWillMount(){
@@ -10,10 +11,12 @@ class App extends Component {
     render() {
         return (
             <Provider store={store}>
+                <ConnectedRouter history={history}>
                 {router}
+                </ConnectedRouter>
             </Provider>
         )
     }
 }
 
-export default App
+export default hot(module)(App)
