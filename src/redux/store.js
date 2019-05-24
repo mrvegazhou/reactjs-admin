@@ -1,11 +1,11 @@
-import { createStore, applyMiddleware, compose } from 'redux/index'
-import { createLogger } from 'redux-logger'
-import thunk from 'redux-thunk'
-import reducers from '@/redux/reducers'
+import { createStore, compose, applyMiddleware } from "redux";
 import { createBrowserHistory } from "history";
 import { routerMiddleware } from "connected-react-router";
-
+import thunk from "redux-thunk";
+import { createLogger } from 'redux-logger'
 const loggerMiddleware = createLogger()
+
+import reducers from "./reducers";
 
 export const history = createBrowserHistory();
 
@@ -15,8 +15,8 @@ export const store = createStore(
     reducers(history),
     composeEnhancers(
         applyMiddleware(
-            apiMiddleware,
             thunk,
+            loggerMiddleware,
             routerMiddleware(history)
         )
     )

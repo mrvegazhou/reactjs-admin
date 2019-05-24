@@ -1,0 +1,50 @@
+.header {
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    background: #fff;
+    padding: 0;
+}
+
+.buttonTrigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.buttonTrigger:hover {
+    color: #1890ff;
+}
+
+.header-right {
+    float: right;
+    height: 100%;
+}
+
+.header-action {
+    display: inline-block;
+    height: 100%;
+    padding: 0 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.header-action:hover {
+    background: rgba(0, 0, 0, 0.025);
+}
+
+.header-avatar-icon {
+    margin: 20px 8px 20px 0;
+    color: #1890ff;
+    vertical-align: top;
+    background: hsla(0, 0%, 100%, 0.85);
+}
+
+.header-action .badge-bell {
+    font-size: 16px;
+}
+
+.header-action i {
+    padding: 4px;
+    vertical-align: middle;
+}

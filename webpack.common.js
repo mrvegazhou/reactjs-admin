@@ -11,7 +11,7 @@ module.exports = {
         'react-hot-loader/patch',
         './src/index.js'
     ],
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     output: {
         filename: '[name].[hash].js',
         path: path.resolve(__dirname, './dist'),
@@ -30,6 +30,10 @@ module.exports = {
                 exclude: /^node_modules$/,
                 use:ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader','sass-loader']}),
                 include: [APP_PATH]
+            },
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
             },
             {
                 test: /\.less$/,
@@ -59,24 +63,11 @@ module.exports = {
                 use: ['jsx-loader', 'babel-loader'],
                 include: [APP_PATH]
             }
-        ],
-        // loaders: [
-        //     { test: /\.js$/, loader: "jsx!babel", include: /src/},
-        //     { test: /\.css$/, loader: ExtractTextPlugin.extract("style", "css!postcss")},
-        //     { test: /\.scss$/, loader: ExtractTextPlugin.extract("style", "css!postcss!sass")},
-        //     { test: /\.(png|jpg|gif)$/, loader: 'url?limit=819200'}
-        // ]
+        ]
     },
-    // babel: {
-    //     presets: ['es2015', 'stage-0', 'react'],
-    //     plugins: ['transform-runtime', ['import', {
-    //         libraryName: 'antd',
-    //         style: 'css'
-    //     }]]
-    // },
-    // postcss: [
-    //     require('autoprefixer')    //调用autoprefixer插件,css3自动补全
-    // ],
+    resolve: {
+        extensions: ['.mjs', '.js', '.json', '.jsx', '.less'],
+    },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebPackPlugin({

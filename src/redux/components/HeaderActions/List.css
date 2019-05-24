@@ -1,0 +1,57 @@
+.header-dropdown-tabsList .list {
+    max-height: 400px;
+    overflow: auto;
+}
+
+.header-dropdown-tabsList .list .list-item {
+    padding-right: 24px;
+    padding-left: 24px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.header-dropdown-tabsList .list .list-item:hover {
+    background: #e6f7ff;
+}
+
+.header-dropdown-tabsList .list .list-item .list-meta {
+    width: 100%;
+}
+.header-dropdown-tabsList .list .list-item .list-avatar {
+    margin-top: 4px;
+    background: #fff;
+}
+.header-dropdown-tabsList .list .list-item .list-title {
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+.header-dropdown-tabsList .list .list-item .list-extra {
+    float: right;
+    margin-top: -1.5px;
+    margin-right: 0;
+    color: rgba(0, 0, 0, 0.45);
+    font-weight: 400;
+}
+
+.header-dropdown-tabsList .list .list-item .list-description {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.header-dropdown-tabsList .list .list-item .list-datetime {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.notData {
+    padding: 73px 0 88px 0;
+    color: #000;
+    text-align: center;
+}
+
+.notData img {
+    display: inline-block;
+    height: 76px;
+    margin-bottom: 16px;
+}

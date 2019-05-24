@@ -1,14 +1,11 @@
-'use strict'
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
+
 import { connectRouter } from "connected-react-router";
 import { reducer as formReducer } from "redux-form";
-import user from './userReducer'
-import UI from './uiReducer'
+import user from './user';
 
-export default history =>
-    combineReducers({
-        router: connectRouter(history),
-        user: user,
-        UI: UI,
-        form: formReducer
-    });
+export default history =>  combineReducers({
+    auth: user,
+    router: connectRouter(history),
+    form: formReducer
+});
