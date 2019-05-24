@@ -11,5 +11,5 @@ export const menus = [
 ]
 
 export const routes = [
-    { path: '/dashboard', component: Dashboard }
+    { path: '/dashboard', component: null }
 ]

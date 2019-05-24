@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Layout, Menu, Avatar, Icon, Dropdown } from "antd";
 const { Header: AntHeader } = Layout;
+import Bell from "@/redux/components/HeaderActions/Bell";
 import "./Header.css";
 
 import { signOut } from "@/redux/actions";
@@ -75,6 +76,25 @@ class Header extends Component {
             <AntHeader className="header">
                 <Icon className="buttonTrigger" type={this.props.collapsed ? "menu-unfold" : "menu-fold"} onClick={this.props.handleCollapse} />
                 <div className="header-right">
+                    <Bell onItemClick={item => {
+                            //dispatch here the action
+                            console.log(item);
+                        }}
+                        onClear={() => console.log("On clear")}
+                        data={this.state.bellData}
+                        onPopupVisibleChange={visible => {
+                            // dispath here the action get bells data
+                            console.log(visible);
+                        }}
+                    >
+                        <Bell.Tab
+                            count={this.state.bellData.notifications}
+                            data={this.state.bellData.notifications}
+                            title="Notification"
+                            emptyText="You not have notifications"
+                            emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
+                        />
+                    </Bell>
                     <Dropdown overlay={this.menu} className="userProfile-dropdown" trigger={["click"]}>
                         <span className="header-action">
                           <Avatar size="small" src={null} className="header-avatar-icon" />

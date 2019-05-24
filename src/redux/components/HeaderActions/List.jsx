@@ -18,7 +18,28 @@ class List extends Component {
                 {data.map(item => {
                     return (
                         <AntList.Item className="list-item" key={item.id} onClick={() => onClick(item)}>
-                            
+                            <AntList.Item.Meta className="list-meta"
+                                avatar={
+                                    <Avatar>
+                                        <Icon type={item.icon} />
+                                    </Avatar>
+                                }
+                                title={
+                                    <div className="list-title">
+                                        {item.title}
+                                        <div className="list-extra" />
+                                        {/* Maybe for tags element */}
+                                    </div>
+                                }
+                                description={
+                                    <div>
+                                        <div className="list-description" title={item.description}>
+                                            {item.description}
+                                        </div>
+                                        <div className="list-datetime">{item.date}</div>
+                                    </div>
+                                }
+                            />
                         </AntList.Item>
                     );
                 })}

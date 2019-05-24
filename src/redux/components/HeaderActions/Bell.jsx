@@ -1,7 +1,7 @@
 import "./Bell.css";
 import React, { Component, Fragment, Children } from "react";
 import { Dropdown, Badge, Tabs, Spin, Icon } from "antd";
-
+import List from "./List";
 const { TabPane } = Tabs;
 
 class Bell extends Component {
@@ -42,5 +42,40 @@ class Bell extends Component {
                 </TabPane>
             );
         });
+        return (
+            <Fragment>
+                <Spin spinning={loading}>
+                    <Tabs className="tabsList">{panes}</Tabs>
+                </Spin>
+            </Fragment>
+        );
+    }
+
+    render() {
+        const { onPopupVisibleChange } = this.props;
+        // Todo: get count bell notifications from redux
+        const trigger = (
+            <span className="header-action">
+        <Badge count={0} className="badge-bell">
+          <Icon type="bell" className="icon-bell" />
+        </Badge>
+      </span>
+        );
+
+        if (!this.getBox()) {
+            return trigger;
+        }
+        return (
+            <Dropdown
+                trigger={["click"]}
+                overlay={this.getBox()}
+                overlayClassName="header-dropdown-tabsList"
+                onVisibleChange={onPopupVisibleChange}
+            >
+                {trigger}
+            </Dropdown>
+        );
     }
 }
+
+export default Bell;
