@@ -6,6 +6,7 @@ import {
     API_START,
     API_END
 } from '@/redux/actions/types';
+
 import jwt_decode from "jwt-decode";
 
 const getUserData = jwt => {
@@ -26,6 +27,7 @@ const userState = {
     user: getUserData(userJwt),
     jwt: userJwt ? userJwt : null,
     isLoading: null,
+    role: '',
     error: null
 }
 

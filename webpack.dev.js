@@ -5,6 +5,7 @@ const paths = require('./config/paths');
 module.exports = merge(common, {
     mode: 'development',
     devServer: {
+        historyApiFallback: true,
         host: 'localhost',
         port: 3001,
         open: true,

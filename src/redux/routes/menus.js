@@ -1,5 +1,8 @@
+import Home from "@/redux/components/home";
+import Error404 from "@/redux/components/error/404";
+
 export const menus = [
-    { path: '/dashboard', title: '首页', icon: 'home' },
+    { path: '/home', title: '首页', icon: 'home' },
     {
         path: '/table', title: '表格', icon: 'copy',
         children: [
@@ -11,5 +14,6 @@ export const menus = [
 ]
 
 export const routes = [
-    { path: '/dashboard', component: null }
+    { path: '/home', component: Home },
+    { path: '/error/404', component: Error404},
 ]
