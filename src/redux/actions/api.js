@@ -1,3 +1,6 @@
+import {
+    API
+} from "@/redux/actions/types";
 
 export function apiAction({
                               url = "",

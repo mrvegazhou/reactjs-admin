@@ -10,7 +10,7 @@ import "./layout.css";
 import BackToTop from "@/redux/components/backToUp";
 import Error404 from "@/redux/components/error/404";
 import Home from "@/redux/components/home";
-
+import TableList from "@/redux/views/tables";
 
 const { Content, Footer } = Layout;
 
@@ -47,7 +47,7 @@ class LayoutComponent extends Component {
                         <Content className="page-layout-content">
                             <Switch>
                                 <Route component={Home} key="/home" path="/home" />
-
+                                <Route component={TableList} key="/list" path="/list" />
                             </Switch>
                         </Content>
                         <BackToTop/>
