@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import { menus } from '@/redux/routes/menus'
+import { changeBreadCrumbData } from '@/redux/actions'
 import { Layout, Menu, Icon } from "antd";
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu
@@ -18,9 +19,23 @@ class Sidebar extends Component {
         collapsed: false
     };
 
-    handleMenuClick = e => {
-        this.setState({ currentPage: e.key });
-        this.props.history.push(e.key);
+    handleMenuClick = ({ item, key, keyPath }) => {
+        this.props.history.push(key);
+
+        console.log(keyPath, '0000000');
+        keyPath = keyPath && keyPath.reverse()
+        const crumb = {
+            keyPath: keyPath,
+            openKeys: keyPath.filter((item) => {
+                console.log(item, key, 'pppp');
+                console.log( !(item === key));
+                return !(item === key)
+            }),
+            selectedKeys: [key]
+        }
+
+        this.props.changeBreadCrumbData(crumb);
+        console.log(this.state);
     };
 
 
@@ -74,6 +89,8 @@ class Sidebar extends Component {
     }
 }
 
-const mapStateToProps = ({user, router}) => { return {userInfo: user, router: router} };
+const mapStateToProps = (state) => {
+    return {userInfo: state.user, router: state.router, currentCrumb: state.breadCrumb, state: state}
+};
 
-export default connect(mapStateToProps)(withRouter(Sidebar));
+export default connect(mapStateToProps, {changeBreadCrumbData})(withRouter(Sidebar));

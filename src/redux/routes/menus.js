@@ -16,6 +16,7 @@ export const menus = [
 
 export const routes = [
     { path: '/home', component: Home },
+    { path: '/',  exact:true, component: Home },
     { path: '/list', component: TableList},
     { path: '/error/404', component: Error404},
 ]

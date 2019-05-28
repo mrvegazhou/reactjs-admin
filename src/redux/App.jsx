@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from "connected-react-router";
 import Login from "@/redux/components/auth/Login";
 import LayoutComponent from "@/redux/components/layout";

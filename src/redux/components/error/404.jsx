@@ -22,7 +22,7 @@ class Error404 extends Component {
                     <p className='desc'>抱歉，你访问的页面不存在</p>
                     <div>
                         <Button
-                            onClick={goback}
+                            onClick={this.goback}
                             type='primary'
                         >返回首页</Button>
                     </div>

@@ -12,7 +12,7 @@ export const history = createBrowserHistory();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(
-    reducers(history),
+    reducers(history), //dispatch history给connectRouter
     composeEnhancers(
         applyMiddleware(
             thunk,
