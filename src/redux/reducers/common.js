@@ -6,10 +6,8 @@ const globalState = {
 
 export function handleBreadCrumb(state = globalState, action) {
     switch (action.type) {
-        case CHANGE_BREAD_CRUMB_DATA:
-            console.log(action.currentCrumb, "action.currentCrumb");
+        case 'CHANGE_BREAD_CRUMB_DATA':
             localStorage.setItem("currentCrumb", JSON.stringify(action.currentCrumb));
-
             return Object.assign({}, state, {
                 currentCrumb: action.currentCrumb
             });

@@ -4,6 +4,7 @@ import Error404 from "@/redux/components/error/404";
 
 export const menus = [
     { path: '/home', title: '首页', icon: 'home' },
+    { path: '/error/404', title: '404', icon: '404' },
     {
         path: '/table', title: '表格', icon: 'copy',
         children: [
@@ -15,8 +16,8 @@ export const menus = [
 ]
 
 export const routes = [
-    { path: '/home', component: Home },
-    { path: '/',  exact:true, component: Home },
-    { path: '/list', component: TableList},
-    { path: '/error/404', component: Error404},
+    { path: '/home', component: Home, value: 'Home' },
+    { path: '/',  exact:true, component: Home, value: 'Home' },
+    { path: '/list', component: TableList, value: '列表'},
+    { path: '/error/404', component: Error404, value: '404'},
 ]

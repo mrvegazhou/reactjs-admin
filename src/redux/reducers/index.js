@@ -4,7 +4,7 @@ import { connectRouter } from "connected-react-router";
 import { reducer as formReducer } from "redux-form";
 import user from './user';
 import tableList from './tableList';
-import handleBreadCrumb from './common';
+import { handleBreadCrumb } from './common';
 export default history =>  combineReducers({
     auth: user,
     breadCrumb: handleBreadCrumb,

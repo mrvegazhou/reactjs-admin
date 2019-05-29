@@ -43,6 +43,7 @@ class LayoutComponent extends Component {
             menus = menus.filter((menu) => {
                 return menu.path === key
             });
+
             if (menus.length) {
                 links.push(menus[0].value);
                 if (menus[0].children) {
@@ -50,6 +51,7 @@ class LayoutComponent extends Component {
                 }
             }
         })
+        console.log(links);
         if (links.length) {
             return links.map((link, index) => {
                 return (<Breadcrumb.Item key={index}> {link} </Breadcrumb.Item>)
@@ -59,8 +61,8 @@ class LayoutComponent extends Component {
 
     render() {
         const { currentCrumb } = this.props;
-        console.log(localStorage.getItem("currentCrumb"), "oooo'");
         let obj = JSON.parse(localStorage.getItem("currentCrumb")) || currentCrumb;
+
         return (
                 <Layout style={{minHeight: "100vh"}}>
                     <SideBar collapsed={this.state.collapsed}/>
@@ -96,10 +98,9 @@ class LayoutComponent extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state, 'sdsdfsd');
     return {
         auth: state.auth,
-        currentCrumb: state
+        currentCrumb: state.breadCrumb.currentCrumb
     };
 };
 

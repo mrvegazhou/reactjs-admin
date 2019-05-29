@@ -22,20 +22,16 @@ class Sidebar extends Component {
     handleMenuClick = ({ item, key, keyPath }) => {
         this.props.history.push(key);
 
-        console.log(keyPath, '0000000');
         keyPath = keyPath && keyPath.reverse()
         const crumb = {
             keyPath: keyPath,
             openKeys: keyPath.filter((item) => {
-                console.log(item, key, 'pppp');
-                console.log( !(item === key));
                 return !(item === key)
             }),
             selectedKeys: [key]
         }
 
         this.props.changeBreadCrumbData(crumb);
-        console.log(this.state);
     };
 
 
@@ -89,8 +85,13 @@ class Sidebar extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {userInfo: state.user, router: state.router, currentCrumb: state.breadCrumb, state: state}
+function mapStateToProps(state){
+    return {
+            userInfo: state.auth,
+            router: state.router,
+            currentCrumb: state.breadCrumb.currentCrumb
+    }
 };
 
-export default connect(mapStateToProps, {changeBreadCrumbData})(withRouter(Sidebar));
+
+export default connect(mapStateToProps, { changeBreadCrumbData })(withRouter(Sidebar));

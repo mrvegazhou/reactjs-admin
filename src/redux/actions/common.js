@@ -10,7 +10,6 @@ export function getCurrentBreadCrumbData() {
 }
 
 export function changeBreadCrumbData(currentCrumb) {
-
     return {
         type: CHANGE_BREAD_CRUMB_DATA,
         currentCrumb: currentCrumb
