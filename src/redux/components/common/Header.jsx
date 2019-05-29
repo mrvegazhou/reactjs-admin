@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Layout, Menu, Avatar, Icon, Dropdown } from "antd";
+import { Layout, Menu, Avatar, Icon, Dropdown,Badge } from "antd";
 const { Header: AntHeader } = Layout;
 import Bell from "@/redux/components/HeaderActions/Bell";
+import Calendar from "@/redux/components/HeaderActions/Calendar";
 import "./Header.css";
 
 import { signOut } from "@/redux/actions";
 
 class Header extends Component {
     state = {
-        showInputSearch: false,
         bellData: {
             notifications: [
                 {
@@ -76,32 +76,32 @@ class Header extends Component {
             <AntHeader className="header">
                 <Icon className="buttonTrigger" type={this.props.collapsed ? "menu-unfold" : "menu-fold"} onClick={this.props.handleCollapse} />
                 <div className="header-right">
+                    <Calendar></Calendar>
                     <Bell onItemClick={item => {
-                            //dispatch here the action
-                            console.log(item);
-                        }}
-                        onClear={() => console.log("On clear")}
-                        data={this.state.bellData}
-                        onPopupVisibleChange={visible => {
-                            // dispath here the action get bells data
-                            console.log(visible);
-                        }}
+                        //dispatch here the action
+                        console.log(item);
+                    }}
+                          onClear={() => console.log("On clear")}
+                          data={this.state.bellData}
+                          onPopupVisibleChange={visible => {
+                              // dispath here the action get bells data
+                              console.log(visible);
+                          }}
                     >
                         <Bell.Tab
-                            count={this.state.bellData.notifications}
                             data={this.state.bellData.notifications}
-                            title="Notification"
-                            emptyText="You not have notifications"
+                            title="提醒"
+                            emptyText="您没有消息提示!"
                             emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
                         />
                     </Bell>
                     <Dropdown overlay={this.menu} className="userProfile-dropdown" trigger={["click"]}>
-                        <span className="header-action">
-                          <Avatar size="small" src={null} className="header-avatar-icon" />
-                          <span className="header-avatar-name">
-                            {null}
-                          </span>
-                        </span>
+                                <span className="header-action">
+                                  <Avatar size="small" src={null} className="header-avatar-icon" />
+                                  <span className="header-avatar-name">
+                                    {null}
+                                  </span>
+                                </span>
                     </Dropdown>
                 </div>
             </AntHeader>

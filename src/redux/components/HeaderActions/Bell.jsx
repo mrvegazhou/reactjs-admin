@@ -8,11 +8,13 @@ class Bell extends Component {
     static Tab = TabPane;
 
     onItemClick = item => {
-        this.props.onItemClick(item);
+        console.log(item,"sss");
+        return this.props.onItemClick(item);
     };
 
     getBox() {
         const { children, loading } = this.props;
+        console.log(children, "-----children----");
         if (!children) {
             return null;
         }
@@ -20,13 +22,12 @@ class Bell extends Component {
             const {
                 title,
                 data,
-                count,
                 showClear,
                 showViewMore,
                 emptyImage,
                 emptyText
             } = child.props;
-            const len = count.length;
+            const len = data.length;
             const tabTitle = len > 0 ? `${title} (${len})` : title;
 
             return (
@@ -52,14 +53,15 @@ class Bell extends Component {
     }
 
     render() {
+        //onPopupVisibleChange显示/隐藏浮层的回调
         const { onPopupVisibleChange } = this.props;
         // Todo: get count bell notifications from redux
         const trigger = (
             <span className="header-action">
-        <Badge count={0} className="badge-bell">
-          <Icon type="bell" className="icon-bell" />
-        </Badge>
-      </span>
+                <Badge count={0} className="badge-bell">
+                  <Icon type="bell" className="icon-bell" />
+                </Badge>
+            </span>
         );
 
         if (!this.getBox()) {

@@ -1,7 +1,7 @@
 import Home from "@/redux/components/home";
 import TableList from "@/redux/views/tables";
 import Error404 from "@/redux/components/error/404";
-
+import Calendars from "@/redux/components/calender";
 export const menus = [
     { path: '/home', title: '首页', icon: 'home' },
     { path: '/error/404', title: '404', icon: '404' },
@@ -20,4 +20,5 @@ export const routes = [
     { path: '/',  exact:true, component: Home, value: 'Home' },
     { path: '/list', component: TableList, value: '列表'},
     { path: '/error/404', component: Error404, value: '404'},
+    { path: '/head/calendars', component: Calendars, value: '日程安排' }
 ]

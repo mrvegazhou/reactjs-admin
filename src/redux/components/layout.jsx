@@ -9,8 +9,7 @@ import { routes } from "@/redux/routes/menus";
 import "./layout.css";
 import BackToTop from "@/redux/components/backToUp";
 import Error404 from "@/redux/components/error/404";
-import Home from "@/redux/components/home";
-import TableList from "@/redux/views/tables";
+
 
 const { Content, Footer } = Layout;
 
@@ -51,7 +50,6 @@ class LayoutComponent extends Component {
                 }
             }
         })
-        console.log(links);
         if (links.length) {
             return links.map((link, index) => {
                 return (<Breadcrumb.Item key={index}> {link} </Breadcrumb.Item>)
