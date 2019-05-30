@@ -9,12 +9,13 @@ import { routes } from "@/redux/routes/menus";
 import "./layout.css";
 import BackToTop from "@/redux/components/backToUp";
 import Error404 from "@/redux/components/error/404";
-
+import AuthRouter from "@/redux/routes/privateRoute";
 
 const { Content, Footer } = Layout;
 
 
 class LayoutComponent extends Component {
+
     constructor(props) {
         super(props);
         this.role = localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo')).role;
@@ -74,11 +75,10 @@ class LayoutComponent extends Component {
                             <Switch>
                                 {
                                     routes.map(ele => {
-                                            return this.handleFilter(ele.permission) && <Route
+                                            return this.handleFilter(ele.permission) && <AuthRouter
                                                 component={ele.component}
                                                 key={ele.path}
                                                 path={ele.path}
-                                                exact={ele.exact ? true : false}
                                             />
                                     })
                                 }

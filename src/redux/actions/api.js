@@ -24,6 +24,8 @@ export function apiAction({
                               onFailure = () => {},
                               label = ""
                           }) {
+    alert(111);
+    setTimeout(function() { console.log('ssssssss'); }, 5000);
     return {
         type: API,
         payload: {

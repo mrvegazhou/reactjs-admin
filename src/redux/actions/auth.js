@@ -1,14 +1,16 @@
 import { SIGN_IN, LOGOUT, LOGIN, UPDATE_JWT, ERROR_LOGIN } from "./types";
 import { apiAction } from "./api";
 
-export const signIn = (email, password) =>
+export const signIn = (email, password, history, toURL) =>
     apiAction({
         url: "auth/login",
         method: "POST",
         data: { email, password },
         onSuccess: successLogin,
         onFailure: errorLogin,
-        label: SIGN_IN
+        label: SIGN_IN,
+        history,
+        toURL
     });
 
 export const signOut = () => {

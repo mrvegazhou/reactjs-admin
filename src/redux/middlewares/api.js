@@ -14,7 +14,9 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
         jwt,
         onSuccess,
         onFailure,
-        label
+        label,
+        history,
+        toURL
     } = action.payload;
     const dataOrParams = ["GET", "DELETE"].includes(method) ? "params" : "data";
 
@@ -48,6 +50,9 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
             if (jwt && userJwt !== data.jwt) {
                 dispatch(updateJwt(data.jwt));
             }
+
+            //跳转到原始页
+            history.push(toURL);
         })
         .catch(error => {
             dispatch(apiError(error));

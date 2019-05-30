@@ -17,7 +17,14 @@ class Login extends Component {
     }
 
     onSubmit = ({ email, password }) => {
-        this.props.signIn(email, password);
+        let from;
+        if(this.props.location.state != null){
+
+            from = this.props.location.state.from
+        }
+        const urlTo = from || '/layout/home';
+
+        this.props.signIn(email, password, this.props.history, urlTo);
     };
 
     render() {

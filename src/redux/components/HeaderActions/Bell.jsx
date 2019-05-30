@@ -8,13 +8,11 @@ class Bell extends Component {
     static Tab = TabPane;
 
     onItemClick = item => {
-        console.log(item,"sss");
         return this.props.onItemClick(item);
     };
 
     getBox() {
         const { children, loading } = this.props;
-        console.log(children, "-----children----");
         if (!children) {
             return null;
         }
