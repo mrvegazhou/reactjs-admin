@@ -10,7 +10,8 @@ import "./Header.css";
 import { signOut, clickCalendar } from "@/redux/actions";
 
 class Header extends Component {
-    state = {
+
+    state =  {
         bellData: {
             notifications: [
                 {
@@ -24,6 +25,11 @@ class Header extends Component {
             ]
         }
     };
+
+    constructor(props) {
+        super(props);
+        this.resetCalendarCount = this.resetCalendarCount.bind(this)
+    }
 
     handleMenuClick = e => {
         switch (e.key) {
@@ -54,13 +60,19 @@ class Header extends Component {
         </Menu>
     );
 
+    resetCalendarCount () {
+        this.props.clickCalendar(0);
+    };
+
     render() {
         const { user, isSignedIn } = this.props.auth;
         return (
             <AntHeader className="header">
                 <Icon className="buttonTrigger" type={this.props.collapsed ? "menu-unfold" : "menu-fold"} onClick={this.props.handleCollapse} />
                 <div className="header-right">
-                    <Calendar count={9}></Calendar>
+
+                    <Calendar count={this.props.calendar.showCalendarCount} resetCalendarCount={this.resetCalendarCount}></Calendar>
+
                     <Bell onItemClick={item => {
                         //dispatch here the action
                         console.log(item);
@@ -81,7 +93,7 @@ class Header extends Component {
                     </Bell>
                     <Dropdown overlay={this.menu} className="userProfile-dropdown" trigger={["click"]}>
                                 <span className="header-action">
-                                  <Avatar size="small" src={null} className="header-avatar-icon" />
+                                  <Avatar size="small" shape='circle' src={user!==null ? auth.url : null} icon="user" className="header-avatar-icon" />
                                   <span className="header-avatar-name">
                                     {null}
                                   </span>
@@ -93,9 +105,10 @@ class Header extends Component {
     };
 }
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth,calendar }) => {
     return {
-        auth
+        auth,
+        calendar
     };
 };
 

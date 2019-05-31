@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import { Layout, Breadcrumb, Icon } from "antd";
 import SideBar from '@/redux/components/common/SideBar';
 import Header from '@/redux/components/common/Header';
-import { routes } from "@/redux/routes/menus";
+import { menus, routes } from "@/redux/routes/menus";
 
 import "./layout.css";
 import BackToTop from "@/redux/components/backToUp";
@@ -38,19 +38,22 @@ class LayoutComponent extends Component {
 
     }
 
+    //面包屑
     constructBreadCrumb = (menus, keyPath, links = []) => {
         keyPath && keyPath.forEach((key, index) => {
-            menus = menus.filter((menu) => {
+            let menusTmp = menus.filter((menu) => {
                 return menu.path === key
             });
 
-            if (menus.length) {
-                links.push(menus[0].value);
-                if (menus[0].children) {
-                    this.constructBreadCrumb(menus[0].children, keyPath.slice(index + 1), links);
+            if (menusTmp.length) {
+                links.push(menusTmp[0].value);
+                if (menusTmp[0].children) {
+                    this.constructBreadCrumb(menusTmp[0].children, keyPath.slice(index + 1), links);
                 }
             }
+
         })
+
         if (links.length) {
             return links.map((link, index) => {
                 return (<Breadcrumb.Item key={index}> {link} </Breadcrumb.Item>)
@@ -60,8 +63,6 @@ class LayoutComponent extends Component {
 
     render() {
         const { currentCrumb } = this.props;
-        let obj = JSON.parse(localStorage.getItem("currentCrumb")) || currentCrumb;
-
         return (
                 <Layout style={{minHeight: "100vh"}}>
                     <SideBar collapsed={this.state.collapsed}/>
@@ -70,12 +71,12 @@ class LayoutComponent extends Component {
                         <Content className="page-layout-content">
                             <Breadcrumb style={{ margin: '0 0 10px 0', color: '#000000' }} separator=">">
                                 <Breadcrumb.Item><Icon type="home" /></Breadcrumb.Item>
-                                {this.constructBreadCrumb(routes, (obj && obj.keyPath))}
+                                {this.constructBreadCrumb(routes, (currentCrumb && currentCrumb.keyPath))}
                             </Breadcrumb>
                             <Switch>
                                 {
                                     routes.map(ele => {
-                                            return this.handleFilter(ele.permission) && <AuthRouter
+                                            return this.handleFilter(ele.permission) && ele.component!=null && <AuthRouter
                                                 component={ele.component}
                                                 key={ele.path}
                                                 path={ele.path}
@@ -98,7 +99,8 @@ class LayoutComponent extends Component {
 const mapStateToProps = (state) => {
     return {
         auth: state.auth,
-        currentCrumb: state.breadCrumb.currentCrumb
+        currentCrumb: state.breadCrumb.currentCrumb,
+
     };
 };
 

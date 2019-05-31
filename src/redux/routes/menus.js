@@ -2,23 +2,26 @@ import Home from "@/redux/components/home";
 import TableList from "@/redux/views/tables";
 import Error404 from "@/redux/components/error/404";
 import Calendars from "@/redux/components/calender";
+import BasicTableComp from "@/redux/components/tables/basicTable";
+
 export const menus = [
     { path: '/layout/home', title: '首页', icon: 'home' },
     { path: '/layout/calendar', title: '日程安排', icon: 'calendar' },
     {
-        path: '/layout/list', title: '表格', icon: 'copy',
+        path: '/layout/table/main', title: '表格', icon: 'table',
         children: [
-            { path: '/layout/list', title: '基础表格' },
-            { path: '/layout/table/edit', title: '表格编辑' },
-            { path: '/layout/table/dynamic', title: '动态列表格' },
+            { path: '/layout/table/list', title: '基础表格', icon: "table" },
+            { path: '/layout/table/edit', title: '表格编辑', icon: "table"  },
+            { path: '/layout/table/dynamic', title: '动态列表格' , icon: "table" },
         ],
     }
 ]
 
 export const routes = [
-    { path: '/layout/home', component: Home, value: 'Home' },
     { path: '/layout/home',  exact:true, component: Home, value: 'Home' },
-    { path: '/layout/list', component: TableList, value: '列表'},
+    { path: '/layout/list', component: TableList, value: '表格'},
     { path: '/layout/error/404', component: Error404, value: '404'},
-    { path: '/layout/calendar', component: Calendars, value: '日程安排' }
+    { path: '/layout/calendar', component: Calendars, value: '日程安排' },
+    { path: '/layout/table/main',  component: null, value: '表格' },
+    { path: '/layout/table/list', component: BasicTableComp, value: '基础表格' }
 ]
