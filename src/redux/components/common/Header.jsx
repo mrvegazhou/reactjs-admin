@@ -7,7 +7,7 @@ import Bell from "@/redux/components/HeaderActions/Bell";
 import Calendar from "@/redux/components/HeaderActions/Calendar";
 import "./Header.css";
 
-import { signOut } from "@/redux/actions";
+import { signOut, clickCalendar } from "@/redux/actions";
 
 class Header extends Component {
     state = {
@@ -20,22 +20,6 @@ class Header extends Component {
                     description: "",
                     tags: [],
                     date: "2019-03-02 13:40"
-                },
-                {
-                    id: 2,
-                    title: "A new section was created!",
-                    icon: "mail",
-                    description: "",
-                    tags: [],
-                    date: "2019-03-02 10:40"
-                },
-                {
-                    id: 3,
-                    title: "You need to create a security code",
-                    icon: "mail",
-                    description: "",
-                    tags: [],
-                    date: "2019-03-01 09:10"
                 }
             ]
         }
@@ -76,7 +60,7 @@ class Header extends Component {
             <AntHeader className="header">
                 <Icon className="buttonTrigger" type={this.props.collapsed ? "menu-unfold" : "menu-fold"} onClick={this.props.handleCollapse} />
                 <div className="header-right">
-                    <Calendar></Calendar>
+                    <Calendar count={9}></Calendar>
                     <Bell onItemClick={item => {
                         //dispatch here the action
                         console.log(item);
@@ -117,5 +101,5 @@ const mapStateToProps = ({ auth }) => {
 
 export default connect(
     mapStateToProps,
-    { signOut }
+    { signOut, clickCalendar }
 )(withRouter(Header));
