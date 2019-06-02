@@ -21,7 +21,7 @@ class Sidebar extends Component {
 
     handleMenuClick = ({ item, key, keyPath }) => {
         this.props.history.push(key);
-        keyPath = keyPath && keyPath.reverse()
+        keyPath = keyPath && keyPath.reverse();
         const crumb = {
             keyPath: keyPath,
             openKeys: keyPath.filter((item) => {
@@ -29,11 +29,11 @@ class Sidebar extends Component {
             }),
             selectedKeys: [key]
         }
-        console.log(crumb, "--------------------");
+
         this.props.changeBreadCrumbData(crumb);
     };
 
-     handleFilter =  permission => {
+    handleFilter =  permission => {
         // 过滤没有权限的页面
         if(!permission ||permission===this.role ) return true
         return false
@@ -43,15 +43,18 @@ class Sidebar extends Component {
     render() {
         const { history } = this.props;
         const menuSelected = history.location.pathname;
-
+        const openKey = this.props.breadCrumb.currentCrumb!=null ? [this.props.breadCrumb.currentCrumb.openKeys[this.props.breadCrumb.currentCrumb.openKeys.length-1]] : [menuSelected];
+        const selectedkey = this.props.breadCrumb.currentCrumb!=null ? this.props.breadCrumb.currentCrumb.selectedKeys : [menuSelected];
         return (
             <Sider trigger={null} collapsible collapsed={this.props.collapsed}>
                 <div className="logo" />
                 <Menu theme="dark"
                       mode="inline"
-                      selectedKeys={this.props.breadCrumb.currentCrumb!=null ? this.props.breadCrumb.currentCrumb.selectedKeys : [menuSelected]}
-                      openKeys={this.props.breadCrumb.currentCrumb!=null ? this.props.breadCrumb.currentCrumb.openKeys : []}
-                      onClick={this.handleMenuClick} defaultSelectedKeys={[menuSelected]} >
+                      selectedKeys={selectedkey}
+                      onClick={this.handleMenuClick}
+                      //selectedKeys={[menuSelected]}
+                      defaultOpenKeys={openKey}
+                >
                     {
                         menus.map(ele => {
                             if(ele.children){
@@ -61,12 +64,12 @@ class Sidebar extends Component {
                                         {
                                             ele.children.map(subItem =>{
                                                 return this.handleFilter(subItem.permission) &&
-                                                <Menu.Item key={subItem.path} >
-                                                    <Link to={subItem.path}>
-                                                        <Icon type={subItem.icon} />
-                                                        {subItem.title}
-                                                    </Link>
-                                                </Menu.Item>
+                                                    <Menu.Item key={subItem.path} >
+                                                        <Link to={subItem.path}>
+                                                            <Icon type={subItem.icon} />
+                                                            <span>{subItem.title}</span>
+                                                        </Link>
+                                                    </Menu.Item>
                                             })
                                         }
                                     </SubMenu>

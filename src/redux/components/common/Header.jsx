@@ -3,8 +3,10 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Layout, Menu, Avatar, Icon, Dropdown,Badge } from "antd";
 const { Header: AntHeader } = Layout;
+import { changeBreadCrumbData } from '@/redux/actions'
 import Bell from "@/redux/components/HeaderActions/Bell";
 import Calendar from "@/redux/components/HeaderActions/Calendar";
+import { calendarMenuUrl } from "@/redux/routes/menus";
 import "./Header.css";
 
 import { signOut, clickCalendar } from "@/redux/actions";
@@ -62,6 +64,13 @@ class Header extends Component {
 
     resetCalendarCount () {
         this.props.clickCalendar(0);
+        this.props.changeBreadCrumbData(
+            {
+                keyPath: [calendarMenuUrl],
+                openKeys: [calendarMenuUrl],
+                selectedKeys: [calendarMenuUrl]
+            }
+        );
     };
 
     render() {
@@ -105,14 +114,15 @@ class Header extends Component {
     };
 }
 
-const mapStateToProps = ({ auth,calendar }) => {
+const mapStateToProps = ({ auth,calendar,breadCrumb }) => {
     return {
         auth,
-        calendar
+        calendar,
+        currentCrumb: breadCrumb.currentCrumb,
     };
 };
 
 export default connect(
     mapStateToProps,
-    { signOut, clickCalendar }
+    { signOut, clickCalendar, changeBreadCrumbData }
 )(withRouter(Header));

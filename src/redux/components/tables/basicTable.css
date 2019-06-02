@@ -1,0 +1,31 @@
+.formBody {
+    padding: 20px;
+    min-height: 360px;
+    background: #fff;
+}
+.formBody .gutter-row {
+    margin-bottom:15px;
+}
+.formBody .plus, .formBody .minus, .formBody .question {
+    display: inline-block;
+    font-size: 20px;
+    cursor: pointer;
+}
+.formBody .plus{
+    color: green;
+}
+.formBody .minus{
+    color: red;
+}
+.formBody .btnOpera{
+    float: right;
+}
+.formBody .formTable {
+    margin-top: 15px;
+}
+.formBody .formTable th, .formBody .formTable td {
+    text-align: center !important;
+}
+.formBody .opera span {
+    cursor: pointer;
+}

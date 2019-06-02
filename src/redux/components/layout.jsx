@@ -62,7 +62,7 @@ class LayoutComponent extends Component {
     }
 
     render() {
-        const { currentCrumb } = this.props;
+        const currentCrumb =  JSON.parse(localStorage.getItem("currentCrumb")) || this.props.currentCrumb;
         return (
                 <Layout style={{minHeight: "100vh"}}>
                     <SideBar collapsed={this.state.collapsed}/>

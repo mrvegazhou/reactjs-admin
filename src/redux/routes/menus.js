@@ -4,9 +4,11 @@ import Error404 from "@/redux/components/error/404";
 import Calendars from "@/redux/components/calender";
 import BasicTableComp from "@/redux/components/tables/basicTable";
 
+export const calendarMenuUrl = "/layout/calendar";
+
 export const menus = [
     { path: '/layout/home', title: '首页', icon: 'home' },
-    { path: '/layout/calendar', title: '日程安排', icon: 'calendar' },
+    { path: calendarMenuUrl, title: '日程安排', icon: 'calendar' },
     {
         path: '/layout/table/main', title: '表格', icon: 'table',
         children: [
@@ -19,9 +21,9 @@ export const menus = [
 
 export const routes = [
     { path: '/layout/home',  exact:true, component: Home, value: 'Home' },
-    { path: '/layout/list', component: TableList, value: '表格'},
     { path: '/layout/error/404', component: Error404, value: '404'},
-    { path: '/layout/calendar', component: Calendars, value: '日程安排' },
+    { path: calendarMenuUrl, component: Calendars, value: '日程安排' },
     { path: '/layout/table/main',  component: null, value: '表格' },
     { path: '/layout/table/list', component: BasicTableComp, value: '基础表格' }
 ]
+

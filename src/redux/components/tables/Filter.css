@@ -1,0 +1,18 @@
+.filterItem {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filterItem .labelWrap {
+    width: 75px;
+    line-height: 28px;
+    margin-right: 12px;
+    justify-content: space-between;
+    display: flex;
+    overflow: hidden;
+}
+
+
+.filterItem .item {
+    flex: 1;
+}
