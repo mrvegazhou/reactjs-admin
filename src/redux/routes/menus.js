@@ -7,10 +7,10 @@ import BasicTableComp from "@/redux/components/tables/basicTable";
 export const calendarMenuUrl = "/layout/calendar";
 
 export const menus = [
-    { path: '/layout/home', title: '首页', icon: 'home' },
-    { path: calendarMenuUrl, title: '日程安排', icon: 'calendar' },
+    { path: '/layout/home', title: '首页', icon: 'home', level: 1 },
+    { path: calendarMenuUrl, title: '日程安排', icon: 'calendar', level: 1  },
     {
-        path: '/layout/table/main', title: '表格', icon: 'table',
+        path: '/layout/table/main', title: '表格', icon: 'table', level: 1,
         children: [
             { path: '/layout/table/list', title: '基础表格', icon: "table" },
             { path: '/layout/table/edit', title: '表格编辑', icon: "table"  },

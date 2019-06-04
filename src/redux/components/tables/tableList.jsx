@@ -1,31 +1,36 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Table, Icon, Popconfirm } from 'antd';
 import moment from 'moment';
 import DropOption from '@/redux/components/tables/DropOption';
 
-export default class FormTable extends Component{
+export default class FormTable extends PureComponent{
     constructor(props){
         super(props);
     }
 
-
-    handleMenuClick = (record, e) => {
-        const { onDelete, editClick, } = this.props
-
+    handleMenuClick = (flag, record, e) => {
+        const { handleDelete, handleUpdateModalVisible } = this.props
         if (e.key === '1') {
-            editClick(record)
+            handleUpdateModalVisible(flag, record)
         } else if (e.key === '2') {
             confirm({
-                title: i18n.t`Are you sure delete this record?`,
+                title: 'Are you sure delete this record?',
                 onOk() {
-                    onDelete(record.id)
+                    handleDelete(record.id)
                 },
             })
         }
     }
 
+    handleRowSelectChange = (selectedRowKeys, selectedRows) => {
+        const { onSelectRow } = this.props;
+        if (onSelectRow) {
+            onSelectRow(selectedRows);
+        }
+    };
+
     render(){
-        const { rowSelection, dataSource, loading } = this.props;
+        const { dataSource, loading } = this.props;
 
         const columns = [{
             title: '姓名',
@@ -72,7 +77,7 @@ export default class FormTable extends Component{
             width:100,
             render: (text, record) =>
                 <DropOption
-                    onMenuClick={e => this.handleMenuClick(record, e)}
+                    onMenuClick={e => this.handleMenuClick(true, record, e)}
                     menuOptions={[
                         { key: '1', name: '编辑' },
                         { key: '2', name: "删除" },
@@ -80,9 +85,16 @@ export default class FormTable extends Component{
                 />
         }];
 
+        const rowSelection = {
+            // selectedRowKeys,
+            onChange: this.handleRowSelectChange,
+            getCheckboxProps: record => ({
+                disabled: record.name === 'Disabled User'
+            }),
+        };
         return(
             <Table
-                rowSelection={dataSource.length ? rowSelection : null}
+                rowSelection={rowSelection}
                 columns={columns}
                 dataSource={dataSource}
                 bordered={true}

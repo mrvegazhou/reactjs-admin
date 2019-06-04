@@ -35,7 +35,7 @@ class Filter extends Component {
 
     handleFields = fields => {
         const { createTime } = fields
-        if (createTime.length) {
+        if ( createTime!=void 0 && createTime.length>0 ) {
             fields.createTime = [
                 moment(createTime[0]).format('YYYY-MM-DD'),
                 moment(createTime[1]).format('YYYY-MM-DD'),
@@ -95,9 +95,6 @@ class Filter extends Component {
                             options={city}
                             placeholder='Please pick an address'
                             onChange={this.handleChange.bind(this, 'address')}
-                            getPopupContainer={() =>
-                                document.getElementById('addressCascader')
-                            }
                         />
                     )}
                 </FormItem>
@@ -106,9 +103,6 @@ class Filter extends Component {
                                 <RangePicker
                                     style={{ width: '100%' }}
                                     onChange={this.handleChange.bind(this, 'createTime')}
-                                    getCalendarContainer={() => {
-                                        return document.getElementById('createTimeRangePicker')
-                                    }}
                                 />
                             )}
                 </FormItem>
