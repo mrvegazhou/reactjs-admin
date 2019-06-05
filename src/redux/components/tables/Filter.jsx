@@ -44,29 +44,31 @@ class Filter extends Component {
         return fields
     }
 
+    handleAdd = () => {
+        this.props.onAdd(true)
+    }
+
     handleSubmit = () => {
-        const { onFilterChange, form } = this.props
+        const { form } = this.props
         const { getFieldsValue } = form
 
         let fields = getFieldsValue()
         fields = this.handleFields(fields)
-        onFilterChange(fields)
     }
 
     handleChange = (key, values) => {
-        const { form, onFilterChange } = this.props
+        const { form } = this.props
         const { getFieldsValue } = form
 
         let fields = getFieldsValue()
         fields[key] = values
         fields = this.handleFields(fields)
-        onFilterChange(fields)
     }
 
     render() {
 
-        const { onAdd, filter, form } = this.props
-        const { getFieldDecorator } = form
+        const { onAdd, form } = this.props;
+        const { getFieldDecorator } = form;
 
         // let initialCreateTime = []
         // if (filter.createTime && filter.createTime[0]) {
@@ -75,8 +77,6 @@ class Filter extends Component {
         // if (filter.createTime && filter.createTime[1]) {
         //     initialCreateTime[1] = moment(filter.createTime[1])
         // }
-
-
 
         return (
             <Form layout="inline" style={{marginBottom: '20px'}}>
@@ -112,7 +112,7 @@ class Filter extends Component {
                 <Button onClick={this.handleReset}  style={{marginRight: '5px'}}>
                     Reset
                 </Button>
-                <Button onClick={onAdd}>
+                <Button onClick={this.handleAdd}>
                     Create
                 </Button>
             </Form>
@@ -124,8 +124,7 @@ class Filter extends Component {
 Filter.propTypes = {
     onAdd: PropTypes.func,
     form: PropTypes.object,
-    filter: PropTypes.object,
-    onFilterChange: PropTypes.func,
+    filter: PropTypes.object
 }
 
 export default Form.create()(Filter)

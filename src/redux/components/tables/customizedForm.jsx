@@ -1,14 +1,11 @@
 import React, { PureComponent } from 'react';
 import { Modal, Form, Input, Radio, Button, Cascader, Select, AutoComplete } from 'antd';
 import city from '@/utils/city'
+import {reduxForm} from "redux-form";
 const FormItem = Form.Item;
-const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
 
 class CustomizedForm extends PureComponent {
-    constructor(props){
-        super(props);
-    }
 
     componentDidMount(){
     }
@@ -38,21 +35,27 @@ class CustomizedForm extends PureComponent {
                 确认
             </Button>,
         ];
-    }
+    };
 
-    renderContent = () => {
-        const { form: { getFieldDecorator }, values } = this.props;
+    render(){
+        const { form: { getFieldDecorator }, values, modalVisible, title, handleUpdateModalVisible } = this.props;
         const formLayout = {
             labelCol: { span: 5 },
             wrapperCol: { span: 16 },
         };
         const { autoCompleteResult } = this.state;
-        const websiteOptions = autoCompleteResult.map(website => (
-            <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-        ));
+        const websiteOptions = autoCompleteResult.map(website => {
+            return <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
+        });
         const address = values.address!=void 0 && values.address.split(' / ');
-        return [
-            <Form layout="horizontal">
+        return (
+            <Modal title={title}
+                   visible={modalVisible}
+                   destroyOnClose
+                   footer={this.renderFooter()}
+                   onCancel={() => handleUpdateModalVisible(false, values)}
+                   afterClose={() => handleUpdateModalVisible()}
+            >
                 <FormItem label="姓名" {...formLayout} hasFeedback key="name">
                     {getFieldDecorator('name', {
                         initialValue: values.name || '',
@@ -66,9 +69,9 @@ class CustomizedForm extends PureComponent {
                         initialValue: values.sex || '',
                         rules: [{ required: true, message: '请选择性别！' }],
                     })(
-                        <Radio.Group style={{marginRight: 20}}>
-                            <Radio value='男'>男</Radio>
-                            <Radio value='女'>女</Radio>
+                        <Radio.Group style={{marginRight: 20}} >
+                            <Radio value='男' >男</Radio>
+                            <Radio value='女' >女</Radio>
                         </Radio.Group>
                     )}
                 </FormItem>
@@ -82,7 +85,7 @@ class CustomizedForm extends PureComponent {
                         />
                     )}
                 </FormItem>
-                <FormItem label="手机号" {...formLayout} hasFeedback key="phone">
+                <FormItem label="手机号" {...formLayout} hasFeedback  key="phone">
                     {getFieldDecorator('phone', {
                         initialValue: values.phone || '',
                         rules: [{
@@ -94,7 +97,7 @@ class CustomizedForm extends PureComponent {
                         <Input addonBefore={"+86"} style={{ width: '100%' }} />
                     )}
                 </FormItem>
-                <FormItem label="邮箱" {...formLayout} hasFeedback key="email">
+                <FormItem label="邮箱" {...formLayout} hasFeedback  key="email">
                     {getFieldDecorator('email', {
                         initialValue: values.email || '',
                         rules: [{
@@ -106,7 +109,7 @@ class CustomizedForm extends PureComponent {
                         <Input />
                     )}
                 </FormItem>
-                <FormItem label="网址" {...formLayout} hasFeedback  key="website">
+                <FormItem label="网址" {...formLayout} hasFeedback key="website">
                     {getFieldDecorator('website', {
                         initialValue: values.website || '',
                         rules: [{required: true, message: '请输入网址！'}],
@@ -115,29 +118,13 @@ class CustomizedForm extends PureComponent {
                             dataSource={websiteOptions}
                             onChange={this.handleWebsiteChange}
                         >
-                            <Input/>
+                            <Input />
                         </AutoComplete>
                     )}
                 </FormItem>
-            </Form>
-        ]
-    }
-
-    render(){
-        const { modalVisible, title } = this.props;
-
-        return (
-            <Modal title={title}
-                   visible={modalVisible}
-                   destroyOnClose
-                   footer={this.renderFooter()}
-            >
-                {this.renderContent()}
             </Modal>
-
         );
     }
 }
 
-const CollectionCreateForm = Form.create()(CustomizedForm);
-export default CollectionCreateForm;
+export default Form.create({ name: 'modal_form' })(CustomizedForm);

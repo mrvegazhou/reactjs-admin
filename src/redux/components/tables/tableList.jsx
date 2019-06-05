@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Table, Icon, Popconfirm } from 'antd';
+import { Table, Icon, Popconfirm, Modal } from 'antd';
 import moment from 'moment';
 import DropOption from '@/redux/components/tables/DropOption';
 
@@ -9,16 +9,17 @@ export default class FormTable extends PureComponent{
     }
 
     handleMenuClick = (flag, record, e) => {
-        const { handleDelete, handleUpdateModalVisible } = this.props
+        const { handleDelete, handleUpdateModalVisible } = this.props;
         if (e.key === '1') {
             handleUpdateModalVisible(flag, record)
         } else if (e.key === '2') {
-            confirm({
-                title: 'Are you sure delete this record?',
-                onOk() {
-                    handleDelete(record.id)
-                },
-            })
+            Modal.confirm({
+                title: '删除操作',
+                content: '确定删除该任务吗？',
+                okText: '确认',
+                cancelText: '取消',
+                onOk: () => handleDelete(record.key),
+            });
         }
     }
 
@@ -35,7 +36,7 @@ export default class FormTable extends PureComponent{
         const columns = [{
             title: '姓名',
             dataIndex: 'name',
-            width: 80,
+            width: 80
         }, {
             title: '性别',
             dataIndex: 'sex',
