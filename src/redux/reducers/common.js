@@ -1,7 +1,12 @@
-import {CHANGE_BREAD_CRUMB_DATA, CURRENT_BREAD_CRUMB_DATA} from "@/redux/actions/common";
+import {
+    CHANGE_BREAD_CRUMB_DATA,
+    CURRENT_BREAD_CRUMB_DATA,
+    UPDATE_ACCESSMENU
+} from "@/redux/actions/types";
 
 const globalState = {
-    currentCrumb: null
+    currentCrumb: null,
+    openAccessMenu: []
 }
 
 export function handleBreadCrumb(state = globalState, action) {
@@ -25,8 +30,25 @@ export function handleBreadCrumb(state = globalState, action) {
             return Object.assign({}, state, {
                 currentCrumb: obj
             });
-
         default:
             return state;
     }
 }
+
+export function handleAccessMenu(state, action) {
+    if (!state) {
+        state = {
+            openAccessMenu: [] //展开的可访问的菜单(子级包含父级name)
+        }
+    }
+    switch (action.type) {
+        case UPDATE_ACCESSMENU:
+            return {
+                ...state,
+                openAccessMenu: action.openAccessMenu,
+            }
+        default:
+            return state;
+    }
+}
+

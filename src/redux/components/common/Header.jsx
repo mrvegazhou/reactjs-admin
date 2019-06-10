@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Layout, Menu, Avatar, Icon, Dropdown,Badge } from "antd";
+import {Layout, Menu, Avatar, Icon, Dropdown, Badge, Breadcrumb} from "antd";
 const { Header: AntHeader } = Layout;
 import { changeBreadCrumbData } from '@/redux/actions'
 import Bell from "@/redux/components/HeaderActions/Bell";
 import Calendar from "@/redux/components/HeaderActions/Calendar";
-import { calendarMenuUrl } from "@/redux/routes/menus";
+import {calendarMenuUrl, menus, routes} from "@/redux/routes/menus";
+
 import "./Header.css";
 
 import { signOut, clickCalendar } from "@/redux/actions";
@@ -73,11 +74,43 @@ class Header extends Component {
         );
     };
 
+    //面包屑
+    constructBreadCrumb = (menus, keyPath, links = []) => {
+        keyPath && keyPath.forEach((key, index) => {
+            let menusTmp = menus.filter((menu) => {
+                return menu.path === key
+            });
+
+            if (menusTmp.length) {
+                links.push(menusTmp[0].value);
+                if (menusTmp[0].children) {
+                    this.constructBreadCrumb(menusTmp[0].children, keyPath.slice(index + 1), links);
+                }
+            }
+
+        })
+
+        if (links.length) {
+            return links.map((link, index) => {
+                return (<Breadcrumb.Item key={index}> {link} </Breadcrumb.Item>)
+            })
+        }
+    }
+
     render() {
+        const currentCrumb =  JSON.parse(localStorage.getItem("currentCrumb")) || this.props.currentCrumb;
         const { user, isSignedIn } = this.props.auth;
         return (
             <AntHeader className="header">
-                <Icon className="buttonTrigger" type={this.props.collapsed ? "menu-unfold" : "menu-fold"} onClick={this.props.handleCollapse} />
+                <div className="header-left">
+                    <Icon className="buttonTrigger" type={this.props.collapsed ? "menu-unfold" : "menu-fold"} onClick={this.props.handleCollapse}  style={{ height: '50px', lineHeight: '50px' }} />
+                </div>
+                <div className="header-left">
+                    <Breadcrumb style={{ color: '#000000',height: '50px', lineHeight: '50px' }} separator=">">
+                        <Breadcrumb.Item><Icon type="home" /></Breadcrumb.Item>
+                        {this.constructBreadCrumb(routes, (currentCrumb && currentCrumb.keyPath))}
+                    </Breadcrumb>
+                </div>
                 <div className="header-right">
 
                     <Calendar count={this.props.calendar.showCalendarCount} resetCalendarCount={this.resetCalendarCount}></Calendar>

@@ -1,6 +1,8 @@
 import {
     CURRENT_BREAD_CRUMB_DATA,
-    CHANGE_BREAD_CRUMB_DATA
+    CHANGE_BREAD_CRUMB_DATA,
+    UPDATE_ACCESSMENU
+
 } from "@/redux/actions/types";
 
 export function getCurrentBreadCrumbData() {
@@ -14,4 +16,8 @@ export function changeBreadCrumbData(currentCrumb) {
         type: CHANGE_BREAD_CRUMB_DATA,
         currentCrumb: currentCrumb
     }
+}
+
+export const updateAccessMenu = (data) => {
+    return { type: UPDATE_ACCESSMENU, ...data }
 }

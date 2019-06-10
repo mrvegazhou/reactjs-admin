@@ -60,7 +60,7 @@ module.exports = {
             {
                 test: /\.jsx$/,
                 exclude: /^node_modules$/,
-                use: ['jsx-loader', 'babel-loader'],
+                use: ['babel-loader'],
                 include: [APP_PATH]
             }
         ]
