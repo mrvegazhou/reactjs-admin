@@ -1,7 +1,10 @@
 import {
     CHANGE_BREAD_CRUMB_DATA,
     CURRENT_BREAD_CRUMB_DATA,
-    UPDATE_ACCESSMENU
+    UPDATE_ACCESSMENU,
+    CHANGE_MENU_COLLAPSED,
+    UPDATE_TAB_OPEN_PAGES,
+    UPDATE_TAB_CURRENT_PAGE
 } from "@/redux/actions/types";
 
 const globalState = {
@@ -11,10 +14,10 @@ const globalState = {
 
 export function handleBreadCrumb(state = globalState, action) {
     switch (action.type) {
-        case 'CHANGE_BREAD_CRUMB_DATA':
-            localStorage.setItem("currentCrumb", JSON.stringify(action.currentCrumb));
+        case CHANGE_BREAD_CRUMB_DATA:
+            localStorage.setItem("currentCrumb", JSON.stringify(action.payload.currentCrumb));
             return Object.assign({}, state, {
-                currentCrumb: action.currentCrumb
+                currentCrumb: action.payload.currentCrumb
             });
 
         case CURRENT_BREAD_CRUMB_DATA:
@@ -35,6 +38,23 @@ export function handleBreadCrumb(state = globalState, action) {
     }
 }
 
+export function handleMenuCollapsed(state, action) {
+    if (!state) {
+        state = {
+            menuCollapsed: false
+        }
+    }
+    switch (action.type) {
+        case CHANGE_MENU_COLLAPSED:
+            return {
+                ...state,
+                menuCollapsed: action.payload.menuCollapsed
+            };
+        default:
+            return state;
+    }
+}
+
 export function handleAccessMenu(state, action) {
     if (!state) {
         state = {
@@ -46,6 +66,30 @@ export function handleAccessMenu(state, action) {
             return {
                 ...state,
                 openAccessMenu: action.openAccessMenu,
+            }
+        default:
+            return state;
+    }
+}
+
+//tab标签
+export function handleTabOpenPages(state, action) {
+    if (!state) {
+        state = {
+            openPages: [],
+            currentPage: ''
+        }
+    }
+    switch (action.type) {
+        case UPDATE_TAB_OPEN_PAGES:
+            return {
+                ...state,
+                openPages: action.payload.openPages
+            }
+        case UPDATE_TAB_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.payload.currentPage
             }
         default:
             return state;

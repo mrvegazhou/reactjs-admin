@@ -69,7 +69,7 @@ module.exports = {
         extensions: ['.mjs', '.js', '.json', '.jsx', '.less'],
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         new HtmlWebPackPlugin({
             filename:'index.html',
             template: path.resolve('index.html'),

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import { menus } from '@/redux/routes/menus'
@@ -7,20 +7,15 @@ import { Layout, Menu, Icon } from "antd";
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu
 import "./Sidebar.css";
+import {updateAccessMenu, updateTabCurrentPage} from "@/redux/actions/common";
 
-class Sidebar extends Component {
+class Sidebar extends PureComponent {
     constructor(props) {
         super(props);
         this.role = localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo')).role;
     }
 
-
-    state = {
-        collapsed: false
-    };
-
     handleMenuClick = ({ item, key, keyPath }) => {
-        this.props.history.push(key);
         keyPath = keyPath && keyPath.reverse();
         const crumb = {
             keyPath: keyPath,
@@ -31,6 +26,7 @@ class Sidebar extends Component {
         }
 
         this.props.changeBreadCrumbData(crumb);
+        this.props.updateTabCurrentPage(key);
     };
 
     handleFilter =  permission => {
@@ -38,7 +34,6 @@ class Sidebar extends Component {
         if(!permission ||permission===this.role ) return true
         return false
     };
-
 
     render() {
         const { history } = this.props;
@@ -60,11 +55,11 @@ class Sidebar extends Component {
                             if(ele.children){
                                 return (
                                     this.handleFilter(ele.permission) &&
-                                    <SubMenu key={ele.path} title={<span><Icon type={ele.icon} /><span>{ele.title}</span></span>} >
+                                    <SubMenu key={ele.value} title={<span><Icon type={ele.icon} /><span>{ele.title}</span></span>} >
                                         {
                                             ele.children.map(subItem =>{
                                                 return this.handleFilter(subItem.permission) &&
-                                                    <Menu.Item key={subItem.path} >
+                                                    <Menu.Item key={subItem.value} >
                                                         <Link to={subItem.path}>
                                                             <Icon type={subItem.icon} />
                                                             <span>{subItem.title}</span>
@@ -77,7 +72,7 @@ class Sidebar extends Component {
                             } else {
                                 return (
                                     this.handleFilter(ele.permission) &&
-                                    <Menu.Item key={ele.path}>
+                                    <Menu.Item key={ele.value}>
                                         <Link to={ele.path}>
                                             <Icon type={ele.icon} />
                                             <span>{ele.title}</span>
@@ -93,13 +88,13 @@ class Sidebar extends Component {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
             userInfo: state.auth,
             router: state.router,
-            breadCrumb: state.breadCrumb
+            breadCrumb: state.breadCrumb,
+            menuCollapse: state.menuCollapse.menuCollapse
     }
 };
 
-
-export default connect(mapStateToProps, { changeBreadCrumbData })(withRouter(Sidebar));
+export default connect(mapStateToProps, { changeBreadCrumbData, updateTabCurrentPage })(withRouter(Sidebar));

@@ -10,8 +10,8 @@ export const menus = [
         path: '/layout/table/main', title: '表格', icon: 'table', level: 1, value: 'table',
         children: [
             { path: '/layout/table/list', title: '基础表格', icon: "table", value: 'basicTableComp' },
-            { path: '/layout/table/edit', title: '表格编辑', icon: "table"  },
-            { path: '/layout/table/dynamic', title: '动态列表格' , icon: "table" },
+            { path: '/layout/table/edit', title: '表格编辑', icon: "table", value: 'editTableComp'  },
+            { path: '/layout/table/dynamic', title: '动态列表格' , icon: "table", value: 'dynamicTableComp' },
         ],
     }
 ]

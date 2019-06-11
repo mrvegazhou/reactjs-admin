@@ -10,19 +10,16 @@ import "./layout.css";
 import BackToTop from "@/redux/components/backToUp";
 import {getJWT} from "@/utils/jwt";
 import common from "@/utils/common";
-import { updateAccessMenu } from "@/redux/actions/common";
-
+import { updateAccessMenu, changeMenuCollapsed } from "@/redux/actions/common";
 
 const { Content, Footer } = Layout;
 const { TabPane } = Tabs;
 
 class LayoutComponent extends PureComponent {
-
     constructor(props) {
         super(props);
         this.role = localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo')).role;
         this.state = {
-            collapsed: false,
             navTabTop: 0,
             responsive: false,
             navTabShow: true
@@ -42,7 +39,7 @@ class LayoutComponent extends PureComponent {
         const clientWidth = document.body.clientWidth;
         this.setState({
             responsive: clientWidth <= 992,
-            collapsed: clientWidth <= 992
+            menuCollapsed: clientWidth <= 992
         });
         if (clientWidth < 576) {
             this.setState({
@@ -77,9 +74,8 @@ class LayoutComponent extends PureComponent {
     }
 
     handleCollapse = () => {
-        this.setState({
-            collapsed: !this.state.collapsed
-        });
+        console.log(this.props, !this.props.menuCollapsed);
+        this.props.changeMenuCollapsed(!this.props.menuCollapsed);
     };
 
     handleFilter = permission =>{
@@ -93,22 +89,15 @@ class LayoutComponent extends PureComponent {
 
         return (
                 <Layout style={{minHeight: "100vh"}}>
-                    <SideBar collapsed={this.state.collapsed}/>
+                    <SideBar collapsed={this.props.menuCollapsed}/>
                     <Layout>
-                        <Header collapsed={this.state.collapsed} handleCollapse={this.handleCollapse} />
+                        <Header collapsed={this.state.menuCollapsed} handleCollapse={this.handleCollapse} />
                         <Content className="page-layout-content">
-                            {/*<Switch>*/}
-                            {/*    {routes.map(ele => {*/}
-                            {/*        return this.handleFilter(ele.permission) && ele.component!=null && <AuthRouter*/}
-                            {/*            component={ele.component}*/}
-                            {/*            key={ele.path}*/}
-                            {/*            path={ele.path}*/}
-                            {/*        />*/}
-                            {/*    })}*/}
-                            {/*    <Route component={Error404}></Route>*/}
-                            {/*</Switch>*/}
-
-                            <NavTabs style={{ marginTop: this.state.navTabTop, width: '100%', display: this.state.navTabShow ? 'block' : 'none' }} show={true} />
+                            <NavTabs style={{ marginTop: this.state.navTabTop, width: '100%', display: this.state.navTabShow ? 'block' : 'none' }}
+                                     show={true}
+                                     openPages={this.props.openPages}
+                                     currentPage={this.props.currentPage}
+                            />
                         </Content>
                         <BackToTop/>
                         <Footer style={{textAlign: "center"}}>
@@ -122,16 +111,11 @@ class LayoutComponent extends PureComponent {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        menuCollapsed: state.menuCollapse.menuCollapsed,
+        openPages: state.tabOpenPages.openPages,
+        currentPage: state.tabOpenPages.currentPage
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        updateAccessMenu: (accessMenu) => {
-            dispatch(updateAccessMenu(accessMenu))
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LayoutComponent);
+export default connect(mapStateToProps, {changeMenuCollapsed, updateAccessMenu})(LayoutComponent);

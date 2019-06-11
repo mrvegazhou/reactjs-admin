@@ -82,7 +82,7 @@ class Header extends Component {
             });
 
             if (menusTmp.length) {
-                links.push(menusTmp[0].value);
+                links.push(menusTmp[0].title);
                 if (menusTmp[0].children) {
                     this.constructBreadCrumb(menusTmp[0].children, keyPath.slice(index + 1), links);
                 }
