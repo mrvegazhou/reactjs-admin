@@ -82,7 +82,6 @@ class LayoutComponent extends PureComponent {
         // 过滤没有权限的页面
         if(!permission ||permission===role ) return true
         return false
-
     }
 
     render() {

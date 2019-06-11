@@ -51,7 +51,6 @@ export function updateTabOpenPages(openPages) {
 }
 
 export function updateTabCurrentPage(currentPage) {
-    console.log(currentPage, "-----------------------");
     return {
         type: UPDATE_TAB_CURRENT_PAGE,
         payload: {

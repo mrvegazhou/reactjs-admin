@@ -17,10 +17,10 @@ export const menus = [
 ]
 
 export const routes = [
-    { path: '/layout/home',  exact:true, component: Home, value: 'Home',  title: '首页'},
+    { path: '/layout/home',  exact:true, component: menuMapToComponent['home'], value: 'Home',  title: '首页'},
     { path: '/layout/error/404', component: menuMapToComponent['error404'], value: '404', title: '404'},
     { path: calendarMenuUrl, component: menuMapToComponent['calendars'], value: 'calendars', title: '日程安排' },
-    { path: '/layout/table/main',  component: null, value: 'table', title: '表格' },
+    { path: '/layout/table/main',  component: menuMapToComponent['basicTableComp'], value: 'table', title: '表格' },
     { path: '/layout/table/list', component: menuMapToComponent['basicTableComp'], value: 'basicTableComp', title: '基础表格' }
 ]
 

@@ -92,31 +92,32 @@ class BasicTableComp extends Component{
         console.log(dispatch, "modal dispatch");
     };
 
+    handleFilter = permission =>{
+        // 过滤没有权限的页面
+        if(!permission || permission===role ) return true
+        return false
+    }
+
 
     render(){
         const { dataSource, loading, selectedRows, modalVisible,formValues } = this.state;
-        const hasSelected = selectedRows.length > 0;
-
+        const hasSelected = selectedRows.length > 0 ;
         const updateMethods = {
             handleUpdateModalVisible: this.handleUpdateModalVisible,
             handleUpdate: this.handleUpdate,
         };
 
-        //搜索工具框属性
-        const filterOptions = {
-            onAdd: this.handleModalVisible
-        }
-
         return(
             <div>
                 <div className='formBody'>
 
-                    <Filter {...filterOptions} />
+                    <Filter />
 
                     <Row style={{marginTop: 24, textAlign: 'left', fontSize: 13 }}>
                         <div style={{ marginBottom: 0 }}>
-                            <Button type="primary" onClick={this.handleDelete}
-                                    disabled={!hasSelected} loading={loading}>删除</Button>
+                            this.handleFilter(ele.permission) &&
+                            <Button type="primary" icon="plus-square-o" onClick={this.handleModalVisible} style={{marginRight: 5}}>新增</Button>
+                            <Button type="primary" onClick={this.handleDelete} disabled={!hasSelected} loading={loading}>删除</Button>
                             <span style={{ marginLeft: 8 }}>{hasSelected ? `选择了 ${selectedRows.length} 个对象` : ''}</span>
                         </div>
                     </Row>

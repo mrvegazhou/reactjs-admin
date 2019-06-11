@@ -8,7 +8,7 @@ const APP_PATH = path.resolve(ROOT_PATH, 'src'); //__dirname 中的src目录，�
 
 module.exports = {
     entry: [
-        'react-hot-loader/patch',
+        // 'react-hot-loader/patch',
         './src/index.js'
     ],
     devtool: 'source-map',
