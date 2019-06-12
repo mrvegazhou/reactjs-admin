@@ -1,11 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from "react-redux";
-import Mock from 'mockjs';
 import BasicTable from "@/redux/components/tables/basicTable";
-import data from "@/utils/tableList";
 import { getUserList } from "@/http/api";
-
-Mock.mock('/user/list', data);
 
 class TableDemo extends PureComponent{
     constructor(props) {
@@ -16,7 +12,7 @@ class TableDemo extends PureComponent{
             loading: true,
             pagination: {
                 current: 1,
-                pageSize: 10,
+                pageSize: 3,
                 showQuickJumper: true,
                 showSizeChanger: true,
                 showTotal: total => `Total ${total} items`
@@ -84,20 +80,12 @@ class TableDemo extends PureComponent{
     fetch = async (query = {}) => {
         this.setState({ loading: true });
         let dataRes = await getUserList(query);
-        // .then(function (response) {
-        //         this.setState({
-        //             pagedList: data.rows,
-        //             loading: false
-        //         })}.bind(this)
-        // ).catch(function (error) {
-        //     console.log(error);
-        // });
         let data = dataRes.data;
         const pagination = { ...this.state.pagination };
         pagination.total = data.totalCount;
         this.setState({
             loading: false,
-            pagedList: data.rows,
+            dataSource: data.rows,
             pagination,
         });
     };
@@ -132,7 +120,7 @@ class TableDemo extends PureComponent{
                 handleDeleteItem={this.handleDeleteItem}
                 onChange={this.handleTableChange}
                 pagination={this.state.pagination}
-                dataSource={dataSource}
+                dataSource={this.state.dataSource}
                 loading={this.state.loading}
             />
         )

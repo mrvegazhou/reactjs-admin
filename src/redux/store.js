@@ -16,7 +16,7 @@ export const store = createStore(
     reducers(history), //dispatch history给connectRouter
     composeEnhancers(
         applyMiddleware(
-            apiMiddleware,
+            //apiMiddleware,
             thunk,
             loggerMiddleware,
             routerMiddleware(history)
