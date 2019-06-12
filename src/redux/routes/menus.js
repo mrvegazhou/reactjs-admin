@@ -11,7 +11,7 @@ export const menus = [
         children: [
             { path: '/layout/table/list', title: '基础表格', icon: "table", value: 'basicTableComp' },
             { path: '/layout/table/edit', title: '表格编辑', icon: "table", value: 'editTableComp'  },
-            { path: '/layout/table/dynamic', title: '动态列表格' , icon: "table", value: 'dynamicTableComp' },
+            { path: '/layout/table/tableDemo', title: '动态列表格' , icon: "table", value: 'tableDemo' },
         ],
     }
 ]
@@ -19,8 +19,8 @@ export const menus = [
 export const routes = [
     { path: '/layout/home',  exact:true, component: menuMapToComponent['home'], value: 'Home',  title: '首页'},
     { path: '/layout/error/404', component: menuMapToComponent['error404'], value: '404', title: '404'},
-    { path: calendarMenuUrl, component: menuMapToComponent['calendars'], value: 'calendars', title: '日程安排' },
-    { path: '/layout/table/main',  component: menuMapToComponent['basicTableComp'], value: 'table', title: '表格' },
-    { path: '/layout/table/list', component: menuMapToComponent['basicTableComp'], value: 'basicTableComp', title: '基础表格' }
+    { path: "/layout/calendar", component: menuMapToComponent['calendars'], value: 'calendars', title: '日程安排' },
+    { path: '/layout/table/list',  component: menuMapToComponent['basicTableComp'], value: 'table', title: '表格' },
+    { path: '/layout/table/tableDemo', component: menuMapToComponent['tableDemo'], value: 'tableDemo', title: '动态列表格' }
 ]
 

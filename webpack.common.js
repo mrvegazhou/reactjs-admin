@@ -71,8 +71,8 @@ module.exports = {
     plugins: [
         // new webpack.HotModuleReplacementPlugin(),
         new HtmlWebPackPlugin({
-            filename:'index.html',
-            template: path.resolve('index.html'),
+            filename:'tableDemo.jsx.html',
+            template: path.resolve('tableDemo.jsx.html'),
             title: '输出管理'
         }),
         new ExtractTextPlugin('main.css'),

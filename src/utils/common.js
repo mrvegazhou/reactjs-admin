@@ -69,4 +69,3 @@ common.formatDateTime = function (inputTime) {
 };
 
 export default common;
-

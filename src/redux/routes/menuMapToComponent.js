@@ -21,9 +21,15 @@ const Home = Loadable({
     loading: ContentLoading
 });
 
+const TableDemo = Loadable({
+    loader: () => import('../views/example/tableDemo'),
+    loading: ContentLoading
+});
+
 export default {
     "error404": Error404,
     "calendars": Calendars,
     "basicTableComp": BasicTableComp,
-    "home": Home
+    "home": Home,
+    "tableDemo": TableDemo
 };

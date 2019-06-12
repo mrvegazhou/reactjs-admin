@@ -6,7 +6,7 @@ import {Row, Button, Modal} from 'antd';
 import TableList from '@/redux/components/tables/tableList';
 import Filter from '@/redux/components/tables/Filter';
 import CustomizedForm from './customizedForm';
-
+import common from "@/utils/common";
 import data from '@/utils/tableList.json';
 
 Mock.mock('/data', data);
@@ -106,40 +106,39 @@ class BasicTableComp extends Component{
             handleUpdateModalVisible: this.handleUpdateModalVisible,
             handleUpdate: this.handleUpdate,
         };
+        // 获取自定义列
+        const columns = this.props.colums;
 
         return(
-            <div>
-                <div className='formBody'>
+            <div className='formBody'>
 
-                    <Filter />
+                <Filter />
 
-                    <Row style={{marginTop: 24, textAlign: 'left', fontSize: 13 }}>
-                        <div style={{ marginBottom: 0 }}>
-                            this.handleFilter(ele.permission) &&
-                            <Button type="primary" icon="plus-square-o" onClick={this.handleModalVisible} style={{marginRight: 5}}>新增</Button>
-                            <Button type="primary" onClick={this.handleDelete} disabled={!hasSelected} loading={loading}>删除</Button>
-                            <span style={{ marginLeft: 8 }}>{hasSelected ? `选择了 ${selectedRows.length} 个对象` : ''}</span>
-                        </div>
-                    </Row>
+                <Row style={{marginTop: 24, textAlign: 'left', fontSize: 13 }}>
+                    <div style={{ marginBottom: 0 }}>
+                        <Button type="primary" icon="plus-square-o" onClick={this.handleModalVisible} style={{marginRight: 5}}>新增</Button>
+                        <Button type="primary" onClick={this.handleDelete} disabled={!hasSelected} loading={loading}>删除</Button>
+                        <span style={{ marginLeft: 8 }}>{hasSelected ? `选择了 ${selectedRows.length} 个对象` : ''}</span>
+                    </div>
+                </Row>
 
-                    <TableList
-                        dataSource={dataSource}
-                        selectedRows={selectedRows}
-                        handleDelete={this.handleDeleteItems}
-                        handleUpdateModalVisible={this.handleUpdateModalVisible}
-                        loading={loading}
-                        onSelectRow={this.handleSelectRows}
-                    />
+                <TableList
+                    dataSource={dataSource}
+                    selectedRows={selectedRows}
+                    handleDelete={this.handleDeleteItems}
+                    handleUpdateModalVisible={this.handleUpdateModalVisible}
+                    loading={loading}
+                    onSelectRow={this.handleSelectRows}
+                    columns={columns}
+                />
 
-                    <CustomizedForm
-                        {...updateMethods}
-                        modalVisible={modalVisible}
-                        values={formValues}
-                        key="edit"
-                    />
-                </div>
+                <CustomizedForm
+                    {...updateMethods}
+                    modalVisible={modalVisible}
+                    values={formValues}
+                    key="edit"
+                />
             </div>
-
         );
     }
 }
