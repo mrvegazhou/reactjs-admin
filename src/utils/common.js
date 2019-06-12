@@ -68,4 +68,18 @@ common.formatDateTime = function (inputTime) {
     return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
 };
 
+common.menusToList = function (datas) {
+    let arr = [];
+    let forFn = function (tmpDatas) {
+        tmpDatas.map(function(item){
+            if (item.hasOwnProperty('children')) {
+                forFn(item.children);
+            }
+            arr.push(item);
+        });
+    };
+    forFn(datas);
+    return arr;
+};
+
 export default common;

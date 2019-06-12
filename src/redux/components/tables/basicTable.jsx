@@ -1,62 +1,39 @@
-import React, { Component } from 'react';
-import axios from "axios";
-import Mock from 'mockjs';
+import React, { PureComponent } from 'react';
+
 import './basicTable.css';
 import {Row, Button, Modal} from 'antd';
 import TableList from '@/redux/components/tables/tableList';
 import Filter from '@/redux/components/tables/Filter';
 import CustomizedForm from './customizedForm';
-import common from "@/utils/common";
-import data from '@/utils/tableList.json';
 
-Mock.mock('/data', data);
-
-class BasicTableComp extends Component{
+class BasicTableComp extends PureComponent{
 
     constructor(props) {
         super(props);
         this.state = {
-            dataSource: [],
-            selectedRows: [],
-            tableRowKey: 0,
-            loading: true,
-
             modalVisible: false,
-            formValues: {}
-        };
+            formValues: {},
+            selectedRows: []
+        }
     }
-
-    getData = () => {
-        axios.get('/data')
-            .then(function (response) {
-                this.setState({
-                    dataSource: response.data,
-                    loading:false
-                })
-            }.bind(this))
-            .catch(function (error) {
-                console.log(error);
-            })
-    };
 
     // 删除多行
     handleDelete = (keys) => {
-        const { selectedRows } = this.state;
+        const { selectedRows } = this.props;
         Modal.confirm({
             title: '批量删除操作',
             content: '确定执行批量删除吗？',
             okText: '确认',
             cancelText: '取消',
             onOk: () => {
-
+                this.props.handleDeleteByIds();
             },
         });
     };
 
     // 删除单行
-    handleDeleteItems = (key) => {
-        const dataSource = [...this.state.dataSource];
-        this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+    handleDeleteItem = (key) => {
+        this.props.handleDeleteItem();
     }
 
     // 选中table的复选框的动作
@@ -65,11 +42,6 @@ class BasicTableComp extends Component{
             selectedRows: rows,
         });
     };
-
-    //渲染list
-    componentDidMount(){
-        this.getData();
-    }
 
     //点击修改弹出modal
     handleUpdateModalVisible = (flag, record) => {
@@ -92,22 +64,14 @@ class BasicTableComp extends Component{
         console.log(dispatch, "modal dispatch");
     };
 
-    handleFilter = permission =>{
-        // 过滤没有权限的页面
-        if(!permission || permission===role ) return true
-        return false
-    }
-
-
     render(){
-        const { dataSource, loading, selectedRows, modalVisible,formValues } = this.state;
+        const { dataSource, loading, columns } = this.props;
+        const { selectedRows, modalVisible, formValues } = this.state;
         const hasSelected = selectedRows.length > 0 ;
         const updateMethods = {
             handleUpdateModalVisible: this.handleUpdateModalVisible,
             handleUpdate: this.handleUpdate,
         };
-        // 获取自定义列
-        const columns = this.props.colums;
 
         return(
             <div className='formBody'>
@@ -125,11 +89,12 @@ class BasicTableComp extends Component{
                 <TableList
                     dataSource={dataSource}
                     selectedRows={selectedRows}
-                    handleDelete={this.handleDeleteItems}
-                    handleUpdateModalVisible={this.handleUpdateModalVisible}
-                    loading={loading}
-                    onSelectRow={this.handleSelectRows}
                     columns={columns}
+                    loading={this.props.loading}
+                    handleDelete={this.handleDeleteItem}
+                    handleUpdateModalVisible={this.handleUpdateModalVisible}
+                    onSelectRow={this.handleSelectRows}
+
                 />
 
                 <CustomizedForm

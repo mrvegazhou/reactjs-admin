@@ -7,6 +7,7 @@ import { changeBreadCrumbData } from '@/redux/actions'
 import Bell from "@/redux/components/HeaderActions/Bell";
 import Calendar from "@/redux/components/HeaderActions/Calendar";
 import {calendarMenuUrl, menus, routes} from "@/redux/routes/menus";
+import common from "@/utils/common";
 
 import "./Header.css";
 
@@ -31,7 +32,7 @@ class Header extends Component {
 
     constructor(props) {
         super(props);
-        this.resetCalendarCount = this.resetCalendarCount.bind(this)
+        this.resetCalendarCount = this.resetCalendarCount.bind(this);
     }
 
     handleMenuClick = e => {
@@ -78,24 +79,21 @@ class Header extends Component {
     constructBreadCrumb = (menus, keyPath, links = []) => {
         keyPath && keyPath.forEach((key, index) => {
             let menusTmp = menus.filter((menu) => {
-                return menu.path === key
+                return menu.value === key
             });
-
             if (menusTmp.length) {
                 links.push(menusTmp[0].title);
                 if (menusTmp[0].children) {
                     this.constructBreadCrumb(menusTmp[0].children, keyPath.slice(index + 1), links);
                 }
             }
-
-        })
-
+        });
         if (links.length) {
             return links.map((link, index) => {
                 return (<Breadcrumb.Item key={index}> {link} </Breadcrumb.Item>)
             })
         }
-    }
+    };
 
     render() {
         const currentCrumb =  JSON.parse(localStorage.getItem("currentCrumb")) || this.props.currentCrumb;
@@ -108,7 +106,7 @@ class Header extends Component {
                 <div className="header-left">
                     <Breadcrumb style={{ color: '#000000',height: '50px', lineHeight: '50px' }} separator=">">
                         <Breadcrumb.Item><Icon type="home" /></Breadcrumb.Item>
-                        {this.constructBreadCrumb(routes, (currentCrumb && currentCrumb.keyPath))}
+                        {this.constructBreadCrumb(menus, (currentCrumb && currentCrumb.keyPath))}
                     </Breadcrumb>
                 </div>
                 <div className="header-right">

@@ -1,34 +1,10 @@
-import React, { PureComponent } from 'react';
-import { Table, Icon, Popconfirm, Modal } from 'antd';
-import moment from 'moment';
+import React from 'react';
+import { Table, Modal } from 'antd';
 import DropOption from '@/redux/components/tables/DropOption';
 
-export default class FormTable extends PureComponent{
-    constructor(props){
-        super(props);
-    }
-
-    //获取列信息
-    getColumns = () => {
-        let columns = [{
-            title: '操作',
-            dataIndex: 'opera',
-            width:100,
-            render: (text, record) =>
-                <DropOption
-                    onMenuClick={e => this.handleMenuClick(true, record, e)}
-                    menuOptions={[
-                        { key: '1', name: '编辑' },
-                        { key: '2', name: "删除" },
-                    ]}
-                />
-        }];
-        columns.unshift(this.props.columns[0]);
-        return columns;
-    }
-
-    handleMenuClick = (flag, record, e) => {
-        const { handleDelete, handleUpdateModalVisible } = this.props;
+export default (props) => {
+    const handleMenuClick = (flag, record, e) => {
+        const { handleDelete, handleUpdateModalVisible } = props;
         if (e.key === '1') {
             handleUpdateModalVisible(flag, record)
         } else if (e.key === '2') {
@@ -40,38 +16,55 @@ export default class FormTable extends PureComponent{
                 onOk: () => handleDelete(record.key),
             });
         }
-    }
+    };
 
-    handleRowSelectChange = (selectedRowKeys, selectedRows) => {
-        const { onSelectRow } = this.props;
+    const handleRowSelectChange = (selectedRowKeys, selectedRows) => {
+        const { onSelectRow } = props;
         if (onSelectRow) {
             onSelectRow(selectedRows);
         }
     };
 
-    render(){
-        const { dataSource, loading } = this.props;
+    //获取列信息
+    const getColumns = () => {
+            const columns = props.columns;
+            const operaBtns = {
+                title: '操作',
+                dataIndex: 'opera',
+                width:100,
+                render: (text, record) =>
+                    <DropOption
+                        onMenuClick={e => handleMenuClick(true, record, e)}
+                        menuOptions={[
+                            { key: '1', name: '编辑' },
+                            { key: '2', name: "删除" },
+                        ]}
+                    />
+            };
+            let resColumns = columns.filter(elem => elem.dataIndex!='opera');
+            resColumns.push(operaBtns);
+            return resColumns;
+    };
 
+    const { dataSource, loading } = props;
+    const rowSelection = {
+        // selectedRowKeys,
+        onChange: handleRowSelectChange,
+        getCheckboxProps: record => ({
+            disabled: record.name === 'Disabled User'
+        }),
+    };
 
-
-        const rowSelection = {
-            // selectedRowKeys,
-            onChange: this.handleRowSelectChange,
-            getCheckboxProps: record => ({
-                disabled: record.name === 'Disabled User'
-            }),
-        };
-        return(
-            <Table
-                rowSelection={rowSelection}
-                columns={this.getColumns()}
-                dataSource={dataSource}
-                bordered={true}
-                scroll={{x:'100%'}}
-                className='formTable'
-                loading={loading}
-            />
-        )
-    }
+    return (
+        <Table
+            rowSelection={rowSelection}
+            columns={getColumns()}
+            dataSource={dataSource}
+            bordered={true}
+            scroll={{x:'100%'}}
+            className='formTable'
+            loading={loading}
+        />
+    );
 }
 

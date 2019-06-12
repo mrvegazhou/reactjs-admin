@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { message } from 'antd';
-import history from './history'
-import { message } from 'antd';
+import history from './history';
 import { getJWT, removeJWT } from '@/utils/jwt';
 
 // create an axios instance

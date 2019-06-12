@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
@@ -8,11 +8,9 @@ const { Search } = Input
 const { RangePicker } = DatePicker
 const FormItem = Form.Item;
 
-class Filter extends Component {
+class Filter extends PureComponent {
     componentDidUpdate(prevProps, prevState) {
-        // if (Object.keys(prevProps.filter).length === 0) {
-        //     this.handleReset()
-        // }
+
     }
 
     handleReset = () => {
@@ -42,10 +40,6 @@ class Filter extends Component {
             ]
         }
         return fields
-    }
-
-    handleAdd = () => {
-        this.props.onAdd(true)
     }
 
     handleSubmit = () => {
@@ -107,13 +101,10 @@ class Filter extends Component {
                             )}
                 </FormItem>
                 <Button type="primary"  onClick={this.handleSubmit} style={{marginRight: '5px'}}>
-                    Search
+                    查询
                 </Button>
                 <Button onClick={this.handleReset}  style={{marginRight: '5px'}}>
-                    Reset
-                </Button>
-                <Button onClick={this.handleAdd}>
-                    Create
+                    重置
                 </Button>
             </Form>
         )

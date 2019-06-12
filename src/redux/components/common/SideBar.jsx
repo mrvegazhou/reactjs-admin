@@ -17,13 +17,14 @@ class Sidebar extends PureComponent {
 
     handleMenuClick = ({ item, key, keyPath }) => {
         keyPath = keyPath && keyPath.reverse();
+        console.log(item, key, keyPath, "IIIIIIIIIIIIIIIIIIIIIIII");
         const crumb = {
             keyPath: keyPath,
             openKeys: keyPath.filter((item) => {
                 return !(item === key)
             }),
             selectedKeys: [key]
-        }
+        };
 
         this.props.changeBreadCrumbData(crumb);
         this.props.updateTabCurrentPage(key);

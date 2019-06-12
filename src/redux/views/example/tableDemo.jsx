@@ -1,10 +1,29 @@
 import React, { PureComponent } from 'react';
-import basicTable from "@/redux/components/tables/basicTable";
+import { connect } from "react-redux";
+import Mock from 'mockjs';
+import BasicTable from "@/redux/components/tables/basicTable";
+import data from "@/utils/tableList";
+import { getUserList } from "@/http/api";
 
-class Demo extends PureComponent{
+Mock.mock('/user/list', data);
+
+class TableDemo extends PureComponent{
     constructor(props) {
         super(props);
-        this.column = [
+        this.state = {
+            dataSource: [],
+            tableRowKey: 0,
+            loading: true,
+            pagination: {
+                current: 1,
+                pageSize: 10,
+                showQuickJumper: true,
+                showSizeChanger: true,
+                showTotal: total => `Total ${total} items`
+            }
+        };
+
+        this.columns = [
             {
                 title: '姓名',
                 dataIndex: 'name',
@@ -12,16 +31,10 @@ class Demo extends PureComponent{
             }, {
                 title: '性别',
                 dataIndex: 'sex',
-                filters: [
-                    { text: '男', value: '男' },
-                    { text: '女', value: '女' },
-                ],
-                onFilter: (value, record) => record.sex.indexOf(value) === 0,
                 width: 80,
             }, {
                 title: '年龄',
                 dataIndex: 'age',
-                sorter: (a, b) => a.age - b.age,
                 width: 80,
             },{
                 title: '地址',
@@ -42,20 +55,88 @@ class Demo extends PureComponent{
             },{
                 title: '创建时间',
                 dataIndex: 'createtime',
-                sorter: (a, b) => moment(a.createtime) - moment(b.createtime),
                 width:150,
             }
         ]
+
+        this.handleDeleteItem = this.handleDeleteItem.bind(this);
+        this.handleDeleteByIds = this.handleDeleteByIds.bind(this);
     }
 
+    //渲染list
+    componentDidMount(){
+        this.fetch({
+            pageIndex: this.state.pagination.current,
+            pageSize: this.state.pagination.pageSize,
+            filter: this.state.filter
+        });
+    }
+
+    handleDeleteItem() {
+        const dataSource = [...this.state.dataSource];
+        this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+    }
+
+    handleDeleteByIds() {
+
+    }
+
+    fetch = async (query = {}) => {
+        this.setState({ loading: true });
+        let dataRes = await getUserList(query);
+        // .then(function (response) {
+        //         this.setState({
+        //             pagedList: data.rows,
+        //             loading: false
+        //         })}.bind(this)
+        // ).catch(function (error) {
+        //     console.log(error);
+        // });
+        let data = dataRes.data;
+        const pagination = { ...this.state.pagination };
+        pagination.total = data.totalCount;
+        this.setState({
+            loading: false,
+            pagedList: data.rows,
+            pagination,
+        });
+    };
+
+    handleTableChange = (pagination, filters, sorter) => {
+        const pager = { ...this.state.pagination };
+        pager.current = pagination.current;
+        pager.pageSize = pagination.pageSize;
+        this.setState({
+            pagination: pager,
+            sorter: {
+                field: sorter.field,
+                order: sorter.order
+            }
+        });
+        let query = {
+            pageIndex: pager.current,
+            pageSize: pager.pageSize,
+            sortBy: sorter.field,
+            descending: sorter.order === 'descend',
+            filter: this.state.filter
+        };
+        this.fetch(query);
+    };
+
     render(){
-
+        const { dataSource } = this.state;
         return(
-            <basicTable column={this.column}>
-
-            </basicTable>
+            <BasicTable
+                columns={this.columns}
+                handleDeleteByIds={this.handleDeleteByIds}
+                handleDeleteItem={this.handleDeleteItem}
+                onChange={this.handleTableChange}
+                pagination={this.state.pagination}
+                dataSource={dataSource}
+                loading={this.state.loading}
+            />
         )
     }
 }
 
-export default Demo;
+export default connect()(TableDemo);

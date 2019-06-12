@@ -8,7 +8,7 @@ const APP_PATH = path.resolve(ROOT_PATH, 'src'); //__dirname 中的src目录，�
 
 module.exports = {
     entry: [
-        // 'react-hot-loader/patch',
+        'react-hot-loader/patch',
         './src/index.js'
     ],
     devtool: 'source-map',
@@ -69,10 +69,10 @@ module.exports = {
         extensions: ['.mjs', '.js', '.json', '.jsx', '.less'],
     },
     plugins: [
-        // new webpack.HotModuleReplacementPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebPackPlugin({
-            filename:'tableDemo.jsx.html',
-            template: path.resolve('tableDemo.jsx.html'),
+            filename:'index.html',
+            template: path.resolve('index.html'),
             title: '输出管理'
         }),
         new ExtractTextPlugin('main.css'),
