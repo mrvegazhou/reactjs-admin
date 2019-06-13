@@ -1,18 +1,22 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
-import { menus } from '@/redux/routes/menus'
+import { menus, routes } from '@/redux/routes/menus'
 import { changeBreadCrumbData } from '@/redux/actions'
 import { Layout, Menu, Icon } from "antd";
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu
 import "./Sidebar.css";
-import {updateAccessMenu, updateTabCurrentPage} from "@/redux/actions/common";
+import { updateAccessMenu, updateTabCurrentPage } from "@/redux/actions/common";
+import common from '@/utils/common';
 
 class Sidebar extends PureComponent {
     constructor(props) {
         super(props);
         this.role = localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo')).role;
+        this.state = {
+            openKeys: []
+        };
     }
 
     handleMenuClick = ({ item, key, keyPath }) => {
@@ -47,7 +51,6 @@ class Sidebar extends PureComponent {
                       mode="inline"
                       selectedKeys={selectedkey}
                       onClick={this.handleMenuClick}
-                      //selectedKeys={[menuSelected]}
                       defaultOpenKeys={openKey}
                 >
                     {
@@ -93,7 +96,8 @@ function mapStateToProps(state) {
             userInfo: state.auth,
             router: state.router,
             breadCrumb: state.breadCrumb,
-            menuCollapse: state.menuCollapse.menuCollapse
+            menuCollapse: state.menuCollapse.menuCollapse,
+            openAccessMenu: state.accessMenu.openAccessMenu
     }
 };
 

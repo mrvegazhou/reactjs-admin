@@ -2,23 +2,31 @@ import React, { PureComponent } from 'react';
 import { connect } from "react-redux";
 import BasicTable from "@/redux/components/tables/basicTable";
 import { getUserList } from "@/http/api";
+import SearchFormChildren from "@/redux/views/example/SearchFormChildren";
+import customFormChildren from "@/redux/views/example/CustomFormChildren";
 
 class TableDemo extends PureComponent{
     constructor(props) {
         super(props);
         this.state = {
             dataSource: [],
-            tableRowKey: 0,
             loading: true,
             pagination: {
                 current: 1,
-                pageSize: 3,
-                showQuickJumper: true,
+                pageSize: 1,
+                showQuickJumper: false,
                 showSizeChanger: true,
                 showTotal: total => `Total ${total} items`
-            }
+            },
+
+            filter: {},
+
+            modalVisible: false,
+            formValues: {},
+            selectedRows: []
         };
 
+        //自定义列
         this.columns = [
             {
                 title: '姓名',
@@ -56,7 +64,9 @@ class TableDemo extends PureComponent{
         ]
 
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
-        this.handleDeleteByIds = this.handleDeleteByIds.bind(this);
+        this.handleDeleteItems = this.handleDeleteItems.bind(this);
+        this.handleSelectRows = this.handleSelectRows.bind(this);
+        this.handleUpdateModalVisible = this.handleUpdateModalVisible.bind(this);
     }
 
     //渲染list
@@ -68,14 +78,36 @@ class TableDemo extends PureComponent{
         });
     }
 
-    handleDeleteItem() {
+    handleDeleteItem(key) {
         const dataSource = [...this.state.dataSource];
         this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
     }
 
-    handleDeleteByIds() {
+    handleDeleteItems() {
 
     }
+
+    //多选
+    handleSelectRows(rows) {
+        this.setState({
+            selectedRows: rows
+        });
+    }
+
+    //弹出修改编辑框
+    handleUpdateModalVisible(flag, record) {
+        this.setState({
+            modalVisible: !!flag,
+            formValues: record || {},
+        });
+    }
+
+    //弹出空白展示框
+    handleModalVisible(flag) {
+        this.setState({
+            modalVisible: !!flag,
+        });
+    };
 
     fetch = async (query = {}) => {
         this.setState({ loading: true });
@@ -89,6 +121,17 @@ class TableDemo extends PureComponent{
             pagination,
         });
     };
+
+    refresh = () => {
+        let query = {
+            pageIndex: this.state.pagination.current,
+            pageSize: this.state.pagination.pageSize,
+            sortBy: this.state.sorter.field,
+            descending: this.state.sorter.order === 'descend',
+            filter: this.state.filter
+        };
+        this.fetch(query);
+    }
 
     handleTableChange = (pagination, filters, sorter) => {
         const pager = { ...this.state.pagination };
@@ -112,17 +155,27 @@ class TableDemo extends PureComponent{
     };
 
     render(){
-        const { dataSource } = this.state;
         return(
-            <BasicTable
-                columns={this.columns}
-                handleDeleteByIds={this.handleDeleteByIds}
-                handleDeleteItem={this.handleDeleteItem}
-                onChange={this.handleTableChange}
-                pagination={this.state.pagination}
-                dataSource={this.state.dataSource}
-                loading={this.state.loading}
-            />
+            <div className='formBody'>
+                <BasicTable
+                    columns={this.columns}
+                    handleDeleteItems={this.handleDeleteItems}
+                    handleDeleteItem={this.handleDeleteItem}
+                    onChange={this.handleTableChange}
+                    pagination={this.state.pagination}
+                    dataSource={this.state.dataSource}
+                    loading={this.state.loading}
+                    selectedRows={this.state.selectedRows}
+                    formValues={this.state.formValues}
+                >
+                    <div id="SearchFormChildren">
+                        <SearchFormChildren />
+                    </div>
+                    <div id="CustomizedForm">
+                        <customFormChildren />
+                    </div>
+                </BasicTable>
+            </div>
         )
     }
 }

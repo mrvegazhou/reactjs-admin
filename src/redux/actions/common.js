@@ -36,7 +36,7 @@ export function getMenuCollapsed() {
     }
 }
 
-export const updateAccessMenu = (data) => {
+export function updateAccessMenu(data){
     return { type: UPDATE_ACCESSMENU, ...data }
 }
 

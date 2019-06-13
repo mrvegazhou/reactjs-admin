@@ -85,7 +85,6 @@ class LayoutComponent extends PureComponent {
     }
 
     render() {
-
         return (
                 <Layout style={{minHeight: "100vh"}}>
                     <SideBar collapsed={this.props.menuCollapsed}/>
@@ -113,7 +112,8 @@ const mapStateToProps = (state) => {
         auth: state.auth,
         menuCollapsed: state.menuCollapse.menuCollapsed,
         openPages: state.tabOpenPages.openPages,
-        currentPage: state.tabOpenPages.currentPage
+        currentPage: state.tabOpenPages.currentPage,
+        openAccessMenu: state.accessMenu.openAccessMenu
     };
 };
 

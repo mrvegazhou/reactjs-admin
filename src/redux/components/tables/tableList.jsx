@@ -4,7 +4,7 @@ import DropOption from '@/redux/components/tables/DropOption';
 
 export default (props) => {
     const handleMenuClick = (flag, record, e) => {
-        const { handleDelete, handleUpdateModalVisible } = props;
+        const { handleDeleteItem, handleUpdateModalVisible } = props;
         if (e.key === '1') {
             handleUpdateModalVisible(flag, record)
         } else if (e.key === '2') {
@@ -13,7 +13,7 @@ export default (props) => {
                 content: '确定删除该任务吗？',
                 okText: '确认',
                 cancelText: '取消',
-                onOk: () => handleDelete(record.key),
+                onOk: () => handleDeleteItem(record.key),
             });
         }
     };
@@ -64,6 +64,8 @@ export default (props) => {
             scroll={{x:'100%'}}
             className='formTable'
             loading={loading}
+            pagination={props.pagination}
+            onChange={props.onChange}
         />
     );
 }

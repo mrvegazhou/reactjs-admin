@@ -31,7 +31,6 @@ service.interceptors.request.use(config => {
 // respone interceptor
 service.interceptors.response.use(
     response => {
-        console.log(response.data, 'sssss');
         const res = response.data;
         if (res.statusCode !== 200) {
             message.error(res.msg);

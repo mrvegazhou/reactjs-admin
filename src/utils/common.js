@@ -82,4 +82,19 @@ common.menusToList = function (datas) {
     return arr;
 };
 
+common.getParentMenusByName = function (openAccesseMenu, name) {
+    let temp = [];
+    let forFn = function (openAccesseMenu, name) {
+        for (var item of openAccesseMenu) {
+            if (item.value === name && item.path !== "/") {
+                temp.push(item);
+                forFn(openAccesseMenu, item.parentName);
+            }
+        }
+    };
+    forFn(openAccesseMenu, name);
+    temp.reverse()
+    return temp;
+};
+
 export default common;

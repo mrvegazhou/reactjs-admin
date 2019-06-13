@@ -10,24 +10,33 @@ const TabPane = Tabs.TabPane;
 
 class NavTabs extends React.PureComponent {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentPage: ''
+        };
+    }
+
     hasPermission = true
 
-    componentDidMount() {
-        if (!this.props.show || this.props.openAccessMenu.length===0) {
+    componentWillReceiveProps(nextProps, nextState) {
+        if (!nextProps.show||nextProps.openAccessMenu.length===0) {
             return;
         }
-        const pathname = this.props.location.pathname;
+        const pathname = nextProps.location.pathname;
         let name = routes.find(key => {
             return key['path'] === pathname;
         });
+
         if (name) {
             if (this.props.openPages.some(s => s.path === name.path)) {
                 if (this.props.currentPage !== name.value) {
                     this.props.updateTabCurrentPage('page403');
                 }
             } else {
-                const { openAccessMenu } = this.props;
+                const { openAccessMenu } = nextProps;
                 const menus = openAccessMenu.filter(s => s.path === name.path);
+
                 if (menus.length > 0) {
                     let menu = menus[0];
                     let openPages = this.props.openPages;
@@ -58,11 +67,11 @@ class NavTabs extends React.PureComponent {
                     }
                 }
             }
-        } else if (this.props.location.pathname === "/layout/home" && this.props.currentPage !== 'home') {
+        } else if (nextProps.location.pathname === "/layout/home" && nextProps.currentPage !== 'home') {
             this.props.updateTabCurrentPage("home");
         } else {
             //404
-            if (this.props.openPages.some(s => s.value === '404')) {
+            if (this.props.openPages.some(s => s.name === '404')) {
                 if (this.props.currentPage !== '404') {
                     this.props.updateTabCurrentPage("404");
                 }
@@ -78,6 +87,10 @@ class NavTabs extends React.PureComponent {
                 this.props.updateTabCurrentPage("404");
             }
         }
+
+        this.setState({
+            currentPage: this.props.currentPage
+        });
     }
 
     onTabClick = (activeKey) => {
@@ -112,7 +125,7 @@ class NavTabs extends React.PureComponent {
             <div style={this.props.style}>
                 <Tabs
                     hideAdd
-                    activeKey={this.props.currentPage}
+                    activeKey={this.state.currentPage}
                     tabBarStyle={{ background: 'white', width: '100%', padding: 0, margin: 0, border: 'none' }}
                     type="editable-card"
                     onEdit={this.onEdit}

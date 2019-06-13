@@ -1,20 +1,15 @@
 import React, { PureComponent } from 'react';
 
 import './basicTable.css';
-import {Row, Button, Modal} from 'antd';
+import {Row, Button, Modal, Divider} from 'antd';
 import TableList from '@/redux/components/tables/tableList';
-import Filter from '@/redux/components/tables/Filter';
 import CustomizedForm from './customizedForm';
+import SearchForm from "@/redux/components/tables/SearchForm";
 
 class BasicTableComp extends PureComponent{
 
     constructor(props) {
         super(props);
-        this.state = {
-            modalVisible: false,
-            formValues: {},
-            selectedRows: []
-        }
     }
 
     // 删除多行
@@ -31,56 +26,44 @@ class BasicTableComp extends PureComponent{
         });
     };
 
-    // 删除单行
-    handleDeleteItem = (key) => {
-        this.props.handleDeleteItem();
-    }
-
     // 选中table的复选框的动作
     handleSelectRows = rows => {
-        this.setState({
-            selectedRows: rows,
-        });
+        this.props.handleSelectRows(rows);
     };
 
     //点击修改弹出modal
     handleUpdateModalVisible = (flag, record) => {
-        this.setState({
-            modalVisible: !!flag,
-            formValues: record || {},
-        });
+        this.props.handleUpdateModalVisible(flag, record);
     };
 
     //点击新建弹出modal
     handleModalVisible = flag => {
-        this.setState({
-            modalVisible: !!flag,
-        });
+        this.props.handleModalVisible(flag);
     };
 
     //
     handleUpdate = fields => {
-        const { dispatch } = this.props;
-        console.log(dispatch, "modal dispatch");
+        alert("handleUpdate...");
     };
 
     render(){
-        const { dataSource, loading, columns } = this.props;
-        const { selectedRows, modalVisible, formValues } = this.state;
+        const { dataSource, loading, columns, pagination, selectedRows, modalVisible, formValues, onChange } = this.props;
+        console.log(selectedRows, "******");
         const hasSelected = selectedRows.length > 0 ;
         const updateMethods = {
             handleUpdateModalVisible: this.handleUpdateModalVisible,
             handleUpdate: this.handleUpdate,
         };
-
         return(
-            <div className='formBody'>
-
-                <Filter />
+            <div>
+                <SearchForm>
+                    {this.props.children[0]}
+                </SearchForm>
 
                 <Row style={{marginTop: 24, textAlign: 'left', fontSize: 13 }}>
                     <div style={{ marginBottom: 0 }}>
                         <Button type="primary" icon="plus-square-o" onClick={this.handleModalVisible} style={{marginRight: 5}}>新增</Button>
+                        <Divider type="vertical" />
                         <Button type="primary" onClick={this.handleDelete} disabled={!hasSelected} loading={loading}>删除</Button>
                         <span style={{ marginLeft: 8 }}>{hasSelected ? `选择了 ${selectedRows.length} 个对象` : ''}</span>
                     </div>
@@ -90,11 +73,13 @@ class BasicTableComp extends PureComponent{
                     dataSource={dataSource}
                     selectedRows={selectedRows}
                     columns={columns}
-                    loading={this.props.loading}
-                    handleDelete={this.handleDeleteItem}
+                    loading={loading}
+                    handleDeleteItem={this.props.handleDeleteItem}
+                    handleDeleteItems={this.props.handleDeleteItems}
                     handleUpdateModalVisible={this.handleUpdateModalVisible}
                     onSelectRow={this.handleSelectRows}
-
+                    pagination={pagination}
+                    onChange={onChange}
                 />
 
                 <CustomizedForm
@@ -102,7 +87,9 @@ class BasicTableComp extends PureComponent{
                     modalVisible={modalVisible}
                     values={formValues}
                     key="edit"
-                />
+                >
+                    {this.props.children[1]}
+                </CustomizedForm>
             </div>
         );
     }

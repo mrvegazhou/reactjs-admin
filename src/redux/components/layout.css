@@ -83,3 +83,7 @@
 .ant-layout-content, .ant-layout, .ant-layout-footer {
     background: #ffffff !important;
 }
+
+.ant-tabs:not(.ant-tabs-vertical)>.ant-tabs-content {
+    margin-top: 25px;
+}
