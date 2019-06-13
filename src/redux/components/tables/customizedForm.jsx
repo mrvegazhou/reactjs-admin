@@ -1,11 +1,15 @@
 import React, { PureComponent } from 'react';
 import { Modal, Form, Input, Radio, Button, Cascader, Select, AutoComplete } from 'antd';
 import city from '@/utils/city'
-import {reduxForm} from "redux-form";
 const FormItem = Form.Item;
 const AutoCompleteOption = AutoComplete.Option;
 
 class CustomizedForm extends PureComponent {
+
+    constructor(props) {
+        super(props);
+        this.handleUpdateModalVisible = this.handleUpdateModalVisible.bind(this);
+    }
 
     componentDidMount(){
     }
@@ -25,10 +29,13 @@ class CustomizedForm extends PureComponent {
         this.setState({ autoCompleteResult });
     };
 
+    handleUpdateModalVisible() {
+        this.props.handleUpdateModalVisible(false, this.props.values)
+    }
+
     renderFooter = () => {
-        const { handleUpdateModalVisible, values } = this.props;
         return [
-            <Button key="cancel" onClick={() => handleUpdateModalVisible(false, values)}>
+            <Button key="cancel" onClick={this.handleUpdateModalVisible}>
                 取消
             </Button>,
             <Button key="ok" type="primary">
@@ -53,8 +60,8 @@ class CustomizedForm extends PureComponent {
                    visible={modalVisible}
                    destroyOnClose
                    footer={this.renderFooter()}
-                   onCancel={() => handleUpdateModalVisible(false, values)}
-                   afterClose={() => handleUpdateModalVisible()}
+                   onCancel={() => this.props.handleUpdateModalVisible(false, values)}
+                   afterClose={() => this.props.handleUpdateModalVisible()}
             >
 
             </Modal>
@@ -62,4 +69,4 @@ class CustomizedForm extends PureComponent {
     }
 }
 
-export default Form.create({ name: 'modal_form' })(CustomizedForm);
+export default Form.create({ name: 'modalForm' })(CustomizedForm);

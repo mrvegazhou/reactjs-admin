@@ -74,13 +74,13 @@ class LayoutComponent extends PureComponent {
     }
 
     handleCollapse = () => {
-        console.log(this.props, !this.props.menuCollapsed);
         this.props.changeMenuCollapsed(!this.props.menuCollapsed);
+
     };
 
     handleFilter = permission =>{
         // 过滤没有权限的页面
-        if(!permission ||permission===role ) return true
+        if(!permission ||permission===role ) return true;
         return false
     }
 

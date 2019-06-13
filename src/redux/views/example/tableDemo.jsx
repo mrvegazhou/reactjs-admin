@@ -67,6 +67,7 @@ class TableDemo extends PureComponent{
         this.handleDeleteItems = this.handleDeleteItems.bind(this);
         this.handleSelectRows = this.handleSelectRows.bind(this);
         this.handleUpdateModalVisible = this.handleUpdateModalVisible.bind(this);
+        this.handleModalVisible = this.handleModalVisible.bind(this);
     }
 
     //渲染list
@@ -161,12 +162,14 @@ class TableDemo extends PureComponent{
                     columns={this.columns}
                     handleDeleteItems={this.handleDeleteItems}
                     handleDeleteItem={this.handleDeleteItem}
+                    handleModalVisible={this.handleModalVisible}
                     onChange={this.handleTableChange}
                     pagination={this.state.pagination}
                     dataSource={this.state.dataSource}
                     loading={this.state.loading}
                     selectedRows={this.state.selectedRows}
                     formValues={this.state.formValues}
+                    modalVisible={this.state.modalVisible}
                 >
                     <div id="SearchFormChildren">
                         <SearchFormChildren />

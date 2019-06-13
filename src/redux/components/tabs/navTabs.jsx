@@ -12,9 +12,6 @@ class NavTabs extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        this.state = {
-            currentPage: ''
-        };
     }
 
     hasPermission = true
@@ -27,16 +24,14 @@ class NavTabs extends React.PureComponent {
         let name = routes.find(key => {
             return key['path'] === pathname;
         });
-
         if (name) {
             if (this.props.openPages.some(s => s.path === name.path)) {
                 if (this.props.currentPage !== name.value) {
-                    this.props.updateTabCurrentPage('page403');
+                    this.props.updateTabCurrentPage(name.value);
                 }
             } else {
                 const { openAccessMenu } = nextProps;
                 const menus = openAccessMenu.filter(s => s.path === name.path);
-
                 if (menus.length > 0) {
                     let menu = menus[0];
                     let openPages = this.props.openPages;
@@ -125,7 +120,7 @@ class NavTabs extends React.PureComponent {
             <div style={this.props.style}>
                 <Tabs
                     hideAdd
-                    activeKey={this.state.currentPage}
+                    activeKey={this.props.currentPage}
                     tabBarStyle={{ background: 'white', width: '100%', padding: 0, margin: 0, border: 'none' }}
                     type="editable-card"
                     onEdit={this.onEdit}
@@ -147,7 +142,8 @@ class NavTabs extends React.PureComponent {
 
 const mapStateToProps = state => {
     return {
-        openAccessMenu: state.accessMenu.openAccessMenu
+        openAccessMenu: state.accessMenu.openAccessMenu,
+        currentPage: state.tabOpenPages.currentPage
     }
 }
 

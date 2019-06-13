@@ -10,6 +10,7 @@ class BasicTableComp extends PureComponent{
 
     constructor(props) {
         super(props);
+        this.handleUpdateModalVisible = this.handleUpdateModalVisible.bind(this);
     }
 
     // 删除多行
@@ -32,7 +33,7 @@ class BasicTableComp extends PureComponent{
     };
 
     //点击修改弹出modal
-    handleUpdateModalVisible = (flag, record) => {
+    handleUpdateModalVisible(flag, record)  {
         this.props.handleUpdateModalVisible(flag, record);
     };
 
@@ -48,12 +49,8 @@ class BasicTableComp extends PureComponent{
 
     render(){
         const { dataSource, loading, columns, pagination, selectedRows, modalVisible, formValues, onChange } = this.props;
-        console.log(selectedRows, "******");
         const hasSelected = selectedRows.length > 0 ;
-        const updateMethods = {
-            handleUpdateModalVisible: this.handleUpdateModalVisible,
-            handleUpdate: this.handleUpdate,
-        };
+
         return(
             <div>
                 <SearchForm>
@@ -83,10 +80,11 @@ class BasicTableComp extends PureComponent{
                 />
 
                 <CustomizedForm
-                    {...updateMethods}
                     modalVisible={modalVisible}
                     values={formValues}
                     key="edit"
+                    handleUpdateModalVisible={this.handleUpdateModalVisible}
+                    handleUpdate={this.handleUpdate}
                 >
                     {this.props.children[1]}
                 </CustomizedForm>

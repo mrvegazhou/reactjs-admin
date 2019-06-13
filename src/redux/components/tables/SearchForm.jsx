@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import moment from 'moment'
 import {Form, Button, DatePicker, Input, Cascader, Divider} from 'antd'
 import city from '@/utils/city'
-import "./Filter.css";
+import "./SearchForm.css";
 
 const SearchForm = (props) => {
     const handleReset = () => {
