@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import BasicTable from "@/redux/components/tables/basicTable";
 import { getUserList } from "@/http/api";
 import SearchFormChildren from "@/redux/views/example/SearchFormChildren";
-import customFormChildren from "@/redux/views/example/CustomFormChildren";
+import CustomFormChildren from "@/redux/views/example/CustomFormChildren";
 
 class TableDemo extends PureComponent{
     constructor(props) {
@@ -16,7 +16,7 @@ class TableDemo extends PureComponent{
                 pageSize: 1,
                 showQuickJumper: false,
                 showSizeChanger: true,
-                showTotal: total => `Total ${total} items`
+                showTotal: total => `总共 ${total} 条`
             },
 
             filter: {},
@@ -163,6 +163,7 @@ class TableDemo extends PureComponent{
                     handleDeleteItems={this.handleDeleteItems}
                     handleDeleteItem={this.handleDeleteItem}
                     handleModalVisible={this.handleModalVisible}
+                    handleUpdateModalVisible={this.handleUpdateModalVisible}
                     onChange={this.handleTableChange}
                     pagination={this.state.pagination}
                     dataSource={this.state.dataSource}
@@ -170,12 +171,15 @@ class TableDemo extends PureComponent{
                     selectedRows={this.state.selectedRows}
                     formValues={this.state.formValues}
                     modalVisible={this.state.modalVisible}
+                    modalTitle="table demo"
                 >
                     <div id="SearchFormChildren">
                         <SearchFormChildren />
                     </div>
                     <div id="CustomizedForm">
-                        <customFormChildren />
+                        <CustomFormChildren
+                            formValues={this.state.formValues}
+                        />
                     </div>
                 </BasicTable>
             </div>

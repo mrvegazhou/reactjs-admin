@@ -129,6 +129,7 @@ class NavTabs extends React.PureComponent {
                     {
                         this.props.openPages.map(page => {
                             let Page = MenuMapToComponent[page.name] ? MenuMapToComponent[page.name] : MenuMapToComponent["error404"];
+                            console.log(page, "---------------------------");
                             return  <TabPane forceRender tab={page.title} closable={true} key={page.name}>
                                         <Page />
                                     </TabPane>

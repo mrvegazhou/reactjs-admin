@@ -36,19 +36,22 @@ module.exports = {
                 loader: 'style-loader!css-loader'
             },
             {
-                test: /\.less$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: [
-                        {
-                            loader: "css-loader"
-                        },
-                        {
-                            loader: "less-loader",
-                            options: { javascriptEnabled: true }
+                test: /.less$/,
+                use: [
+                    {
+                        loader: 'style-loader' // creates style nodes from JS strings
+                    },
+                    {
+                        loader: 'css-loader', // translates CSS into CommonJS
+                        options:{ importLoaders: 1}
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            javascriptEnabled: true
                         }
-                    ]
-                })
+                    }
+                ]
             },
             {
                 test: /\.(png|jpg)$/,

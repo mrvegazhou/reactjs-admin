@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react';
-
-import './basicTable.css';
 import {Row, Button, Modal, Divider} from 'antd';
 import TableList from '@/redux/components/tables/tableList';
 import CustomizedForm from './customizedForm';
 import SearchForm from "@/redux/components/tables/SearchForm";
+import './basicTable.css';
 
 class BasicTableComp extends PureComponent{
 
@@ -48,7 +47,7 @@ class BasicTableComp extends PureComponent{
     };
 
     render(){
-        const { dataSource, loading, columns, pagination, selectedRows, modalVisible, formValues, onChange } = this.props;
+        const { dataSource, loading, columns, pagination, selectedRows, modalVisible, onChange, modalTitle, formValues } = this.props;
         const hasSelected = selectedRows.length > 0 ;
 
         return(
@@ -80,10 +79,10 @@ class BasicTableComp extends PureComponent{
                 />
 
                 <CustomizedForm
+                    title={modalTitle}
                     modalVisible={modalVisible}
-                    values={formValues}
                     key="edit"
-                    handleUpdateModalVisible={this.handleUpdateModalVisible}
+                    handleModalVisible={this.handleModalVisible}
                     handleUpdate={this.handleUpdate}
                 >
                     {this.props.children[1]}

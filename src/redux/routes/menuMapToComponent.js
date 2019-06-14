@@ -26,10 +26,16 @@ const TableDemo = Loadable({
     loading: ContentLoading
 });
 
+const UserProfile = Loadable({
+    loader: () => import('../views/user/userProfile'),
+    loading: ContentLoading
+});
+
 export default {
     "error404": Error404,
     "calendars": Calendars,
     "basicTableComp": BasicTableComp,
     "home": Home,
-    "tableDemo": TableDemo
+    "tableDemo": TableDemo,
+    "userProfile": UserProfile
 };
