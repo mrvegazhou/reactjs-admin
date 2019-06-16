@@ -33,7 +33,21 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: 'style-loader!css-loader'
+                loader: 'style-loader!css-loader',
+                exclude: /^node_modules$/
+            },
+            {//antd样式处理
+                test:/\.css$/,
+                exclude:/src/,
+                use:[
+                    { loader: "style-loader",},
+                    {
+                        loader: "css-loader",
+                        options:{
+                            importLoaders:1
+                        }
+                    }
+                ]
             },
             {
                 test: /.less$/,

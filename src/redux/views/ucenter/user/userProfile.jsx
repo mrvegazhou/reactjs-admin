@@ -2,20 +2,50 @@ import React, { PureComponent } from 'react';
 import './userProfile.less';
 import { Card, Row, Col, Icon, Avatar, Tag, Divider, Spin, Input } from 'antd';
 import {connect} from "react-redux";
+import Articles from "@/redux/views/ucenter/article/article";
+import Projects from "@/redux/views/ucenter/project/projectList";
 
 class UserProfile extends PureComponent {
     state = {
         newTags: [],
+        key:'articles'
     }
 
     componentDidMount() {
 
     }
 
+    onTabChange = key => {
+        this.setState({
+            key: key
+        });
+    };
+
     render() {
         const { newTags, inputVisible, inputValue } = this.state;
         const tags = [{key:1, label:'很有想法的'}, {key:2, label:'专注设计'}, {key:3, label:'辣~大长腿川妹子'}, {key: 4, label:'海纳百川'}];
         const notice = [];
+
+        const operationTabList = [
+            {
+                key: 'articles',
+                tab: (
+                    <span>
+                        文章 <span style={{ fontSize: 14 }}>(8)</span>
+                    </span>
+                ),
+            },
+            {
+                key: 'projects',
+                tab: (
+                    <span>
+                        项目 <span style={{ fontSize: 14 }}>(8)</span>
+                    </span>
+                ),
+            }
+        ];
+
+
         return (
             <div className="main">
                 <Row gutter={24}>
@@ -78,8 +108,18 @@ class UserProfile extends PureComponent {
                                     </Spin>
                                 </div>
                             </div>
-
-
+                        </Card>
+                    </Col>
+                    <Col lg={17} md={24}>
+                        <Card
+                            className="tabsCard"
+                            bordered={false}
+                            tabList={operationTabList}
+                            activeTabKey={this.state.key}
+                            onTabChange={this.onTabChange}
+                            loading={null}
+                        >
+                            {this.state.key ==='articles' ? <Articles/> : <Projects/>}
                         </Card>
                     </Col>
                 </Row>

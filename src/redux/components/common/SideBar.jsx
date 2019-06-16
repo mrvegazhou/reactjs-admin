@@ -28,7 +28,6 @@ class Sidebar extends PureComponent {
             }),
             selectedKeys: [key]
         };
-
         this.props.changeBreadCrumbData(crumb);
         this.props.updateTabCurrentPage(key);
     };
@@ -42,8 +41,14 @@ class Sidebar extends PureComponent {
     render() {
         const { history } = this.props;
         const menuSelected = history.location.pathname;
-        const openKey = this.props.breadCrumb.currentCrumb!=null ? [this.props.breadCrumb.currentCrumb.openKeys[this.props.breadCrumb.currentCrumb.openKeys.length-1]] : [menuSelected];
-        const selectedkey = this.props.breadCrumb.currentCrumb!=null ? this.props.breadCrumb.currentCrumb.selectedKeys : [menuSelected];
+        //通过路由获取菜单的name
+        const menuSelectedName = routes.filter(item => {
+            if (item['path']==menuSelected) {
+                return item;
+            }
+        })[0]['value'];
+        const openKey = this.props.breadCrumb.currentCrumb!=null ? [this.props.breadCrumb.currentCrumb.openKeys[this.props.breadCrumb.currentCrumb.openKeys.length-1]] : [menuSelectedName];
+        const selectedkey = this.props.breadCrumb.currentCrumb!=null ? this.props.breadCrumb.currentCrumb.selectedKeys : [menuSelectedName];
         return (
             <Sider trigger={null} collapsible collapsed={this.props.collapsed}>
                 <div className="logo" />

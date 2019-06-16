@@ -2,17 +2,28 @@ import React, {Component} from "react";
 import {Badge, Dropdown, Icon} from "antd";
 import { Link } from "react-router-dom";
 import {connect} from "react-redux";
-import {clickCalendar} from "@/redux/actions";
+import {changeBreadCrumbData, updateAccessMenu, updateTabCurrentPage} from "@/redux/actions/common";
 
 class Calendar extends Component {
     constructor(props) {
         super(props);
-        // this.props.resetCalendarCount();
     }
 
     change = ()=> {
         this.props.resetCalendarCount();
     };
+
+    componentDidUpdate() {
+        if( this.props.location.pathname=='/layout/calendar' ) {
+            this.crumb = {
+                keyPath: ["calendars"],
+                openKeys: [],
+                selectedKeys: ["calendars"]
+            }
+            this.props.changeBreadCrumbData(this.crumb);
+            this.props.updateTabCurrentPage("calendars");
+        }
+    }
 
     render() {
         return (
@@ -27,4 +38,4 @@ class Calendar extends Component {
     }
 }
 
-export default Calendar;
+export default connect(null, { changeBreadCrumbData, updateTabCurrentPage })(Calendar);

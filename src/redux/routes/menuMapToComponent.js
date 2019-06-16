@@ -27,7 +27,12 @@ const TableDemo = Loadable({
 });
 
 const UserProfile = Loadable({
-    loader: () => import('../views/user/userProfile'),
+    loader: () => import('../views/ucenter/user/userProfile'),
+    loading: ContentLoading
+});
+
+const UserSetting = Loadable({
+    loader: () => import('../views/ucenter/user/userSetting'),
     loading: ContentLoading
 });
 
@@ -37,5 +42,6 @@ export default {
     "basicTableComp": BasicTableComp,
     "home": Home,
     "tableDemo": TableDemo,
-    "userProfile": UserProfile
+    "userProfile": UserProfile,
+    "userSetting": UserSetting
 };

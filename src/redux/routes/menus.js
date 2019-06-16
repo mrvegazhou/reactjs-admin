@@ -1,4 +1,3 @@
-import Home from "@/redux/components/home";
 import menuMapToComponent from "./menuMapToComponent";
 
 export const calendarMenuUrl = "/layout/calendar";
@@ -15,7 +14,8 @@ export const menus = [
     {
         path: '', title: '员工', icon: 'user', level: 1, value: 'mainUser',
         children: [
-            { path: '/layout/user/profile', title: '用户信息', icon: 'user', value: 'userProfile' }
+            { path: '/layout/user/profile', title: '用户信息', icon: 'user', value: 'userProfile' },
+            { path: '/layout/user/setting', title: '个人设置', icon: 'user', value: 'userSetting' }
         ]
     }
 ]
@@ -25,6 +25,7 @@ export const routes = [
     { path: '/layout/error/404', component: menuMapToComponent['error404'], value: '404', title: '404'},
     { path: "/layout/calendar", component: menuMapToComponent['calendars'], value: 'calendars', title: '日程安排' },
     { path: '/layout/table/list',  component: menuMapToComponent['tableDemo'], value: 'tableDemo', title: '表格' },
-    { path: '/layout/user/profile', component: menuMapToComponent['userProfile'], value: 'userProfile', title: '用户信息'}
+    { path: '/layout/user/profile', component: menuMapToComponent['userProfile'], value: 'userProfile', title: '用户信息'},
+    { path: '/layout/user/setting', component: menuMapToComponent['userSetting'], value: 'userSetting', title: '个人设置'}
 ]
 
